@@ -215,7 +215,7 @@ export const Results = () => {
             <ArrowLeft className="w-4 h-4" />
             Voltar ao início
           </Button>
-          <Button onClick={exportToPDF} className="flex items-center gap-2 bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)]">
+          <Button onClick={exportToPDF} className="flex items-center gap-2 bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] bg-[#9620a3] text-[#0f100f]">
             <FileDown className="w-4 h-4" />
             Exportar PDF
           </Button>
