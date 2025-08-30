@@ -3,48 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ClipboardList, BarChart3, FileText, Users, Target, Settings } from "lucide-react";
-
 const Index = () => {
   const navigate = useNavigate();
-
-  const features = [
-    {
-      icon: ClipboardList,
-      title: "Questionário Estruturado",
-      description: "Perguntas organizadas por dimensões e categorias para avaliação completa"
-    },
-    {
-      icon: BarChart3,
-      title: "Análise Visual",
-      description: "Gráfico radar mostra o desempenho em cada dimensão avaliada"
-    },
-    {
-      icon: FileText,
-      title: "Relatório em PDF",
-      description: "Exporte seus resultados em formato profissional para compartilhar"
-    }
-  ];
-
-  const dimensions = [
-    {
-      icon: Target,
-      title: "Gestão e Planejamento Estratégico",
-      description: "Avalie visão, missão, valores e planejamento organizacional"
-    },
-    {
-      icon: Users,
-      title: "Governança",
-      description: "Analise estrutura de governança e conselhos consultivos"
-    },
-    {
-      icon: Settings,
-      title: "Mais Dimensões",
-      description: "Expandindo com novas dimensões conforme desenvolvimento"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-[var(--gradient-subtle)]">
+  const features = [{
+    icon: ClipboardList,
+    title: "Questionário Estruturado",
+    description: "Perguntas organizadas por dimensões e categorias para avaliação completa"
+  }, {
+    icon: BarChart3,
+    title: "Análise Visual",
+    description: "Gráfico radar mostra o desempenho em cada dimensão avaliada"
+  }, {
+    icon: FileText,
+    title: "Relatório em PDF",
+    description: "Exporte seus resultados em formato profissional para compartilhar"
+  }];
+  const dimensions = [{
+    icon: Target,
+    title: "Gestão e Planejamento Estratégico",
+    description: "Avalie visão, missão, valores e planejamento organizacional"
+  }, {
+    icon: Users,
+    title: "Governança",
+    description: "Analise estrutura de governança e conselhos consultivos"
+  }, {
+    icon: Settings,
+    title: "Mais Dimensões",
+    description: "Expandindo com novas dimensões conforme desenvolvimento"
+  }];
+  return <div className="min-h-screen bg-[var(--gradient-subtle)]">
       <div className="container mx-auto px-4 py-16 max-w-6xl">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -58,19 +45,14 @@ const Index = () => {
             Avalie a maturidade e o desenvolvimento da sua organização através de um instrumento 
             estruturado que analisa diferentes dimensões organizacionais.
           </p>
-          <Button
-            size="lg"
-            onClick={() => navigate('/questionnaire')}
-            className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] shadow-[var(--shadow-elegant)]"
-          >
+          <Button size="lg" onClick={() => navigate('/questionnaire')} className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] shadow-[var(--shadow-elegant)] bg-[#323b9e] text-[#070708]">
             Iniciar Avaliação
           </Button>
         </div>
 
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-6 mb-16">
-          {features.map((feature, index) => (
-            <Card key={index} className="shadow-[var(--shadow-card)] border-border/50 hover:shadow-[var(--shadow-elegant)] transition-[var(--transition-smooth)]">
+          {features.map((feature, index) => <Card key={index} className="shadow-[var(--shadow-card)] border-border/50 hover:shadow-[var(--shadow-elegant)] transition-[var(--transition-smooth)]">
               <CardHeader className="text-center pb-4">
                 <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                   <feature.icon className="w-6 h-6 text-primary" />
@@ -80,8 +62,7 @@ const Index = () => {
               <CardContent className="text-center">
                 <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
 
         {/* Dimensions */}
@@ -95,8 +76,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-6">
-            {dimensions.map((dimension, index) => (
-              <Card key={index} className="shadow-[var(--shadow-card)] border-border/50 hover:shadow-[var(--shadow-elegant)] transition-[var(--transition-smooth)]">
+            {dimensions.map((dimension, index) => <Card key={index} className="shadow-[var(--shadow-card)] border-border/50 hover:shadow-[var(--shadow-elegant)] transition-[var(--transition-smooth)]">
                 <CardHeader className="pb-4">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
@@ -110,8 +90,7 @@ const Index = () => {
                 <CardContent>
                   <p className="text-sm text-muted-foreground leading-relaxed">{dimension.description}</p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
 
@@ -123,18 +102,12 @@ const Index = () => {
               O questionário leva aproximadamente 10-15 minutos para ser concluído. 
               Todas as perguntas são obrigatórias para garantir uma avaliação precisa.
             </p>
-            <Button
-              size="lg"
-              onClick={() => navigate('/questionnaire')}
-              className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)]"
-            >
+            <Button size="lg" onClick={() => navigate('/questionnaire')} className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)]">
               Começar Autodiagnóstico
             </Button>
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
