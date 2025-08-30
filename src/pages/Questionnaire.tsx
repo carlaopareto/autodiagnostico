@@ -7,17 +7,19 @@ import { questions } from '@/data/questions';
 import { Answer } from '@/types/assessment';
 import { useToast } from '@/hooks/use-toast';
 import { CheckCircle } from 'lucide-react';
-
 export const Questionnaire = () => {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const navigate = useNavigate();
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleAnswerChange = (questionId: string, value: string) => {
     setAnswers(prev => {
       const existing = prev.findIndex(a => a.questionId === questionId);
-      const newAnswer = { questionId, value: parseFloat(value) };
-      
+      const newAnswer = {
+        questionId,
+        value: parseFloat(value)
+      };
       if (existing >= 0) {
         const updated = [...prev];
         updated[existing] = newAnswer;
@@ -26,7 +28,6 @@ export const Questionnaire = () => {
       return [...prev, newAnswer];
     });
   };
-
   const handleSubmit = () => {
     if (answers.length !== questions.length) {
       toast({
@@ -41,8 +42,7 @@ export const Questionnaire = () => {
     localStorage.setItem('assessmentAnswers', JSON.stringify(answers));
     navigate('/results');
   };
-
-  const progress = (answers.length / questions.length) * 100;
+  const progress = answers.length / questions.length * 100;
   const completedQuestions = answers.length;
 
   // Group questions by dimension
@@ -53,9 +53,7 @@ export const Questionnaire = () => {
     acc[question.dimension].push(question);
     return acc;
   }, {} as Record<string, typeof questions>);
-
-  return (
-    <div className="min-h-screen bg-[var(--gradient-subtle)]">
+  return <div className="min-h-screen bg-[var(--gradient-subtle)]">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-8">
@@ -80,8 +78,7 @@ export const Questionnaire = () => {
         </div>
 
         {/* Questions by Dimension */}
-        {Object.entries(questionsByDimension).map(([dimension, dimensionQuestions]) => (
-          <div key={dimension} className="mb-8">
+        {Object.entries(questionsByDimension).map(([dimension, dimensionQuestions]) => <div key={dimension} className="mb-8">
             <div className="bg-card rounded-lg p-6 mb-6 shadow-[var(--shadow-card)] border-l-4 border-l-primary">
               <h2 className="text-xl font-semibold mb-2">{dimension}</h2>
               <p className="text-muted-foreground">
@@ -90,34 +87,18 @@ export const Questionnaire = () => {
             </div>
             
             {dimensionQuestions.map((question, index) => {
-              const questionNumber = questions.findIndex(q => q.id === question.id) + 1;
-              const currentAnswer = answers.find(a => a.questionId === question.id);
-              
-              return (
-                <QuestionCard
-                  key={question.id}
-                  question={question}
-                  value={currentAnswer?.value.toString()}
-                  onValueChange={(value) => handleAnswerChange(question.id, value)}
-                  questionNumber={questionNumber}
-                />
-              );
-            })}
-          </div>
-        ))}
+          const questionNumber = questions.findIndex(q => q.id === question.id) + 1;
+          const currentAnswer = answers.find(a => a.questionId === question.id);
+          return <QuestionCard key={question.id} question={question} value={currentAnswer?.value.toString()} onValueChange={value => handleAnswerChange(question.id, value)} questionNumber={questionNumber} />;
+        })}
+          </div>)}
 
         {/* Submit Button */}
         <div className="flex justify-center pt-8">
-          <Button
-            onClick={handleSubmit}
-            size="lg"
-            className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] shadow-[var(--shadow-elegant)]"
-            disabled={answers.length !== questions.length}
-          >
+          <Button onClick={handleSubmit} size="lg" disabled={answers.length !== questions.length} className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] shadow-[var(--shadow-elegant)] text-[#0c0d0c] bg-[#6c6ce8]">
             Confirmar envio
           </Button>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
