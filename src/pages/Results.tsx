@@ -121,7 +121,7 @@ export const Results = () => {
         <div id="results-container" className="space-y-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-4 bg-[var(--gradient-primary)] bg-clip-text text-[#101110]/0">
+            <h1 className="text-3xl font-bold mb-4 bg-[var(--gradient-primary)] bg-clip-text text-[#131413]/0">
               Resultados do Autodiagnóstico
             </h1>
             <p className="text-muted-foreground text-lg mb-2">
