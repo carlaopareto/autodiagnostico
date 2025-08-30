@@ -38,7 +38,7 @@ const Index = () => {
           <Badge className="mb-6 px-4 py-2 text-sm font-medium bg-primary/10 text-primary border-primary/20">
             Ferramenta de Autoavaliação
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-[var(--gradient-primary)] bg-clip-text text-transparent leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-[var(--gradient-primary)] bg-clip-text leading-tight text-[#191b19]/0">
             Autodiagnóstico de<br />Desenvolvimento Institucional
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
