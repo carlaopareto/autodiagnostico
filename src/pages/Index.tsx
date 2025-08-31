@@ -1,113 +1,128 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ClipboardList, BarChart3, FileText, Users, Target, Settings } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { ClipboardList, BarChart3, FileText } from "lucide-react";
+
 const Index = () => {
   const navigate = useNavigate();
-  const features = [{
-    icon: ClipboardList,
-    title: "Questionário Estruturado",
-    description: "Perguntas organizadas por dimensões e categorias para avaliação completa"
-  }, {
-    icon: BarChart3,
-    title: "Análise Visual",
-    description: "Gráfico radar mostra o desempenho em cada dimensão avaliada"
-  }, {
-    icon: FileText,
-    title: "Relatório em PDF",
-    description: "Exporte seus resultados em formato profissional para compartilhar"
-  }];
-  const dimensions = [{
-    icon: Target,
-    title: "Gestão e Planejamento Estratégico",
-    description: "Avalie visão, missão, valores e planejamento organizacional"
-  }, {
-    icon: Users,
-    title: "Governança",
-    description: "Analise estrutura de governança e conselhos consultivos"
-  }, {
-    icon: Settings,
-    title: "Mais Dimensões",
-    description: "Expandindo com novas dimensões conforme desenvolvimento"
-  }];
-  return <div className="min-h-screen bg-[var(--gradient-subtle)]">
-      <div className="container mx-auto px-4 py-16 max-w-6xl">
+
+  const features = [
+    {
+      icon: ClipboardList,
+      title: "Questionário Estruturado",
+      description: "Perguntas organizadas por dimensões e categorias para avaliação completa",
+    },
+    {
+      icon: BarChart3,
+      title: "Análise Visual",
+      description: "Gráfico radar mostra o desempenho em cada dimensão avaliada",
+    },
+    {
+      icon: FileText,
+      title: "Relatório em PDF",
+      description: "Exporte seus resultados em formato profissional para compartilhar",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-[var(--gradient-subtle)]">
+      <div className="container mx-auto px-4 py-16 max-w-5xl">
+        
         {/* Hero Section */}
-        <div className="text-center mb-16">
-          <Badge className="mb-6 px-4 py-2 text-sm font-medium bg-primary/10 text-primary border-primary/20">
-            Ferramenta de Autoavaliação
-          </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-[var(--gradient-primary)] bg-clip-text leading-tight text-[#141614]">
+        <div className="text-center mb-20">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#141614]">
             Autodiagnóstico de<br />Desenvolvimento Institucional
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Avalie a maturidade e o desenvolvimento da sua organização através de um instrumento 
+          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+            Avalie a maturidade e o desenvolvimento da sua organização através de um instrumento
             estruturado que analisa diferentes dimensões organizacionais.
           </p>
-          <Button size="lg" onClick={() => navigate('/questionnaire')} className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] shadow-[var(--shadow-elegant)] bg-[#323b9e] text-[#070708]">
+          <Button
+            size="lg"
+            onClick={() => navigate("/questionnaire")}
+            className="px-8 py-4 text-lg font-semibold bg-[#323b9e] text-white hover:opacity-90 rounded-2xl shadow"
+          >
             Iniciar Avaliação
           </Button>
         </div>
 
         {/* Features */}
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
-          {features.map((feature, index) => <Card key={index} className="shadow-[var(--shadow-card)] border-border/50 hover:shadow-[var(--shadow-elegant)] transition-[var(--transition-smooth)]">
-              <CardHeader className="text-center pb-4">
-                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <feature.icon className="w-6 h-6 text-primary" />
-                </div>
-                <CardTitle className="text-lg">{feature.title}</CardTitle>
+        <div className="grid md:grid-cols-3 gap-6 mb-20">
+          {features.map((feature, index) => (
+            <Card
+              key={index}
+              className="border border-border/40 shadow-sm hover:shadow-md transition rounded-xl"
+            >
+              <CardHeader className="text-center pb-2">
+                <feature.icon className="w-7 h-7 mx-auto mb-3 text-primary" />
+                <CardTitle className="text-base font-semibold">{feature.title}</CardTitle>
               </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+              <CardContent className="text-center text-sm text-muted-foreground">
+                {feature.description}
               </CardContent>
-            </Card>)}
+            </Card>
+          ))}
         </div>
 
-        {/* Dimensions */}
-        <div className="mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Dimensões Avaliadas</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Cada dimensão é composta por categorias específicas com perguntas estruturadas 
-              para uma avaliação completa e direcionada.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {dimensions.map((dimension, index) => <Card key={index} className="shadow-[var(--shadow-card)] border-border/50 hover:shadow-[var(--shadow-elegant)] transition-[var(--transition-smooth)]">
-                <CardHeader className="pb-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                      <dimension.icon className="w-5 h-5 text-accent" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-base leading-tight">{dimension.title}</CardTitle>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{dimension.description}</p>
-                </CardContent>
-              </Card>)}
-          </div>
-        </div>
+        {/* FAQ Section */}
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-bold text-center mb-8">Perguntas Frequentes</h2>
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            <AccordionItem value="instrumento">
+              <AccordionTrigger>Sobre o instrumento</AccordionTrigger>
+              <AccordionContent>
+                Este instrumento está estruturado em torno de 10 dimensões de desenvolvimento institucional...
+                (texto completo que você forneceu).
+              </AccordionContent>
+            </AccordionItem>
 
-        {/* Call to Action */}
-        <Card className="shadow-[var(--shadow-card)] border-border/50 bg-card/50 backdrop-blur-sm">
-          <CardContent className="text-center py-12">
-            <h3 className="text-2xl font-bold mb-4">Pronto para começar?</h3>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              O questionário leva aproximadamente 10-15 minutos para ser concluído. 
-              Todas as perguntas são obrigatórias para garantir uma avaliação precisa.
-            </p>
-            <Button size="lg" onClick={() => navigate('/questionnaire')} className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)]">
-              Começar Autodiagnóstico
-            </Button>
-          </CardContent>
-        </Card>
+            <AccordionItem value="metodologia">
+              <AccordionTrigger>Sobre a metodologia</AccordionTrigger>
+              <AccordionContent>
+                Este instrumento foi elaborado com a intenção de "tirar uma fotografia" do momento institucional...
+                (texto completo que você forneceu).
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="dimensoes">
+              <AccordionTrigger>Dimensões avaliadas</AccordionTrigger>
+              <AccordionContent>
+                <ul className="list-disc pl-6 space-y-2 text-sm text-muted-foreground">
+                  <li><strong>Gestão e planejamento estratégico:</strong> A gestão estratégica está relacionada com a identidade da organização...</li>
+                  <li><strong>Governança:</strong> A governança diz respeito aos mecanismos de participação nos processos decisórios...</li>
+                  <li><strong>Gestão e desenvolvimento de pessoas:</strong> A gestão de pessoas está relacionada às políticas de recursos humanos...</li>
+                  <li><strong>Incidência em políticas públicas:</strong> A incidência em políticas públicas diz sobre o conhecimento das políticas relacionadas ao campo de trabalho...</li>
+                  <li><strong>Redes e alianças:</strong> Diz respeito à forma de atuação integrada e colaborativa com atores no campo...</li>
+                  <li><strong>Planejamento de projetos e programas:</strong> Relacionado à definição periódica das estratégias dos programas...</li>
+                  <li><strong>Monitoramento, avaliação e aprendizagem:</strong> Refere-se à forma e periodicidade da coleta de dados...</li>
+                  <li><strong>Captação de recursos:</strong> Refere-se às estratégias de financiamento, diversificação de fontes e sustentabilidade financeira...</li>
+                  <li><strong>Comunicação:</strong> Refere-se às estratégias e canais de relacionamento e divulgação dos trabalhos...</li>
+                  <li><strong>Gestão administrativa, financeira e jurídica:</strong> Refere-se ao controle financeiro e procedimentos administrativos da organização.</li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="quem">
+              <AccordionTrigger>Quem deve preencher o instrumento</AccordionTrigger>
+              <AccordionContent>
+                Para que a aplicação do instrumento seja mais proveitosa, recomendamos que esteja presente o maior número de pessoas possível...
+                (texto completo que você forneceu).
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="como">
+              <AccordionTrigger>Como preencher o instrumento</AccordionTrigger>
+              <AccordionContent>
+                O questionário traz 39 perguntas distribuídas entre as 10 dimensões. Todas devem ser respondidas...
+                (texto completo que você forneceu).
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
