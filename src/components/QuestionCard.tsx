@@ -38,7 +38,6 @@ export const QuestionCard = ({ question, value, onValueChange, questionNumber }:
                 htmlFor={`${question.id}-${index}`}
                 className="text-sm leading-relaxed cursor-pointer group-hover:text-foreground transition-[var(--transition-smooth)]"
               >
-                <span className="font-medium text-primary mr-2">({option.value})</span>
                 {option.text}
               </Label>
             </div>

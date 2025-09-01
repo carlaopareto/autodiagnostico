@@ -57,7 +57,7 @@ export const Questionnaire = () => {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-4 bg-[var(--gradient-primary)] bg-clip-text text-[#0d0e0d]/0">
+          <h1 className="text-3xl font-bold mb-4 text-[#141614]">
             Autodiagnóstico de Desenvolvimento Institucional
           </h1>
           <p className="text-muted-foreground text-lg">
@@ -95,7 +95,7 @@ export const Questionnaire = () => {
 
         {/* Submit Button */}
         <div className="flex justify-center pt-8">
-          <Button onClick={handleSubmit} size="lg" disabled={answers.length !== questions.length} className="px-8 py-4 text-lg font-semibold bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] shadow-[var(--shadow-elegant)] text-[#0c0d0c] bg-[#6c6ce8]">
+          <Button onClick={handleSubmit} size="lg" disabled={answers.length !== questions.length} className="px-8 py-4 text-lg font-semibold bg-[#323b9e] text-white hover:opacity-90 rounded-2xl shadow">
             Confirmar envio
           </Button>
         </div>
