@@ -57,7 +57,7 @@ export const Questionnaire = () => {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-4 bg-[var(--gradient-primary)] bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold mb-4 bg-[var(--gradient-primary)] bg-clip-text text-[#0d0e0d]/0">
             Autodiagnóstico de Desenvolvimento Institucional
           </h1>
           <p className="text-muted-foreground text-lg">
