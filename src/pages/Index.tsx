@@ -79,8 +79,7 @@ const Index = () => {
             <AccordionItem value="metodologia">
               <AccordionTrigger>Sobre a metodologia</AccordionTrigger>
               <AccordionContent>
-                Este instrumento foi elaborado com a intenção de "tirar uma fotografia" do momento institucional...
-                (texto completo que você forneceu).
+                Este instrumento foi elaborado com a intenção de "tirar uma fotografia" do momento institucional da organização, para que a sua equipe e lideranças possam ter um retrato aproximado de onde ela se situa, na ocasião em que o instrumento é aplicado, em relação a cada uma das dimensões avaliadas. A proposta é a de que todas as 10 dimensões sejam analisadas, independentemente dos temas enfocados pela organização em seus processos de desenvolvimento institucional. Isso porque entendemos que todas elas coexistem, e que as organizações são complexas. Portanto, ao influenciar uma parte de sua estrutura, é provável que isso tenha reflexo em outras dimensões. Por exemplo, uma revisão no modelo de governança pode impactar a forma como a organização olha para a gestão de pessoas ou o modelo de captação de recursos. Neste sentido, olhar para as conexões entre as partes e o todo, investigar o que as conecta, potencializa e fragiliza, é fundamental para a compreensão não apenas de quais dimensões devem ser trabalhadas e fortalecidas, mas também de como esse fortalecimento deverá ser buscado, em um percurso que é único para cada organização.
               </AccordionContent>
             </AccordionItem>
 
