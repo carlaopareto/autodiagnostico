@@ -111,8 +111,7 @@ const Index = () => {
             <AccordionItem value="como">
               <AccordionTrigger>Como preencher o instrumento</AccordionTrigger>
               <AccordionContent>
-                O questionário traz 39 perguntas distribuídas entre as 10 dimensões. Todas devem ser respondidas...
-                (texto completo que você forneceu).
+                O questionário a ser preenchido traz 39 perguntas distribuídas entre as 10 dimensões do Desenvolvimento Institucional avaliadas pelo instrumento. Cada pergunta inclui quatro possibilidades de resposta. Para que o resultado do diagnóstico não seja comprometido, todas as perguntas devem ser respondidas, ainda que as possibilidades de resposta não descrevam de maneira exata ou rigorosa a realidade da organização. Nesses casos, deverá ser escolhida a resposta que mais se aproxima do cenário da organização.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
