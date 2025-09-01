@@ -104,8 +104,7 @@ const Index = () => {
             <AccordionItem value="quem">
               <AccordionTrigger>Quem deve preencher o instrumento</AccordionTrigger>
               <AccordionContent>
-                Para que a aplicação do instrumento seja mais proveitosa, recomendamos que esteja presente o maior número de pessoas possível...
-                (texto completo que você forneceu).
+                Para que a aplicação do instrumento seja mais proveitosa, recomendamos que, no momento do seu preenchimento, busque-se assegurar a presença do maior número de pessoas possível da organização envolvidas direta ou indiretamente em cada uma das 10 dimensões avaliadas pelo instrumento. É possível criar grupos diferentes para avaliar cada dimensão, mas recomendamos que ao menos uma pessoa participe da avaliação de todas as dimensões e possa ter uma visão completa do conjunto. Caso não seja possível realizar um processo que envolva muitas pessoas, recomendamos que pelo menos duas participem da realização da avaliação. Recomendamos, ainda, que seja reservado um periodo de três a quatro horas para preenchimento do instrumento.
               </AccordionContent>
             </AccordionItem>
 
