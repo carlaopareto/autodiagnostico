@@ -54,6 +54,20 @@ export const Questionnaire = () => {
     return acc;
   }, {} as Record<string, typeof questions>);
   return <div className="min-h-screen bg-[var(--gradient-subtle)]">
+      {/* Fixed Progress Bar */}
+      <div className="sticky top-0 bg-background/95 backdrop-blur-sm shadow-sm border-b z-10">
+        <div className="container mx-auto px-4 py-4 max-w-4xl">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-medium text-muted-foreground">Progresso</span>
+            <span className="text-sm font-medium flex items-center gap-1">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              {completedQuestions}/{questions.length}
+            </span>
+          </div>
+          <Progress value={progress} className="h-2" />
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-8">
@@ -63,18 +77,6 @@ export const Questionnaire = () => {
           <p className="text-muted-foreground text-lg">
             Responda todas as perguntas para avaliar o desenvolvimento da sua organização
           </p>
-        </div>
-
-        {/* Progress */}
-        <div className="mb-8 bg-card rounded-lg p-6 shadow-[var(--shadow-card)]">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium text-muted-foreground">Progresso</span>
-            <span className="text-sm font-medium flex items-center gap-1">
-              <CheckCircle className="w-4 h-4 text-primary" />
-              {completedQuestions}/{questions.length}
-            </span>
-          </div>
-          <Progress value={progress} className="h-2" />
         </div>
 
         {/* Questions by Dimension */}
