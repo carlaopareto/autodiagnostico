@@ -84,6 +84,7 @@ export const Questionnaire = () => {
       });
       yPosition += 3;
 
+      // Dimension
       doc.setFont("helvetica", "normal");
       doc.text(`Dimensão: ${question.dimension}`, marginLeft + 5, yPosition);
       yPosition += 10;
@@ -96,7 +97,7 @@ export const Questionnaire = () => {
         }
         
         const optionText = `(${option.value}) ${option.text}`;
-        const lines = doc.splitTextToSize(optionText, pageWidth - 10);
+        const lines = doc.splitTextToSize(optionText, pageWidth);
         lines.forEach((line: string) => {
           doc.text(line, marginLeft + 10, yPosition);
           yPosition += 6;
