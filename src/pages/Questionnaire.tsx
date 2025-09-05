@@ -72,12 +72,21 @@ export const Questionnaire = () => {
 
       // Question number and text
       doc.setFont("helvetica", "bold");
-      doc.text(`${index + 1}. ${question.text}`, marginLeft, yPosition);
-      yPosition += 10;
+      const questionText = `${index + 1}. ${question.text}`;
+      const questionLines = doc.splitTextToSize(questionText, pageWidth);
+      questionLines.forEach((line: string) => {
+        if (yPosition > pageHeight - 20) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        doc.text(line, marginLeft, yPosition);
+        yPosition += 7;
+      });
+      yPosition += 3;
 
       doc.setFont("helvetica", "normal");
       doc.text(`Dimensão: ${question.dimension}`, marginLeft + 5, yPosition);
-      yPosition += 8;
+      yPosition += 10;
 
       // Options with scores
       question.options.forEach((option) => {
