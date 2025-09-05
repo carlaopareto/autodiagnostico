@@ -6,7 +6,8 @@ import { QuestionCard } from '@/components/QuestionCard';
 import { questions } from '@/data/questions';
 import { Answer } from '@/types/assessment';
 import { useToast } from '@/hooks/use-toast';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Download } from 'lucide-react';
+import jsPDF from 'jspdf';
 export const Questionnaire = () => {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const navigate = useNavigate();
@@ -45,6 +46,65 @@ export const Questionnaire = () => {
   const progress = answers.length / questions.length * 100;
   const completedQuestions = answers.length;
 
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    let yPosition = 20;
+    const pageHeight = doc.internal.pageSize.height;
+    const marginLeft = 20;
+    const marginRight = 20;
+    const pageWidth = doc.internal.pageSize.width - marginLeft - marginRight;
+
+    // Title
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("Autodiagnóstico de Desenvolvimento Institucional", marginLeft, yPosition);
+    yPosition += 20;
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+
+    questions.forEach((question, index) => {
+      // Check if we need a new page
+      if (yPosition > pageHeight - 80) {
+        doc.addPage();
+        yPosition = 20;
+      }
+
+      // Question number and text
+      doc.setFont("helvetica", "bold");
+      doc.text(`${index + 1}. ${question.text}`, marginLeft, yPosition);
+      yPosition += 10;
+
+      doc.setFont("helvetica", "normal");
+      doc.text(`Dimensão: ${question.dimension}`, marginLeft + 5, yPosition);
+      yPosition += 8;
+
+      // Options with scores
+      question.options.forEach((option) => {
+        if (yPosition > pageHeight - 20) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        
+        const optionText = `(${option.value}) ${option.text}`;
+        const lines = doc.splitTextToSize(optionText, pageWidth - 10);
+        lines.forEach((line: string) => {
+          doc.text(line, marginLeft + 10, yPosition);
+          yPosition += 6;
+        });
+      });
+
+      yPosition += 8;
+    });
+
+    doc.save("questionario-desenvolvimento-institucional.pdf");
+    
+    toast({
+      title: "PDF gerado com sucesso",
+      description: "O questionário foi baixado em formato PDF.",
+    });
+  };
+
   // Group questions by dimension
   const questionsByDimension = questions.reduce((acc, question) => {
     if (!acc[question.dimension]) {
@@ -59,10 +119,21 @@ export const Questionnaire = () => {
         <div className="container mx-auto px-4 py-4 max-w-4xl">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-medium text-muted-foreground">Progresso</span>
-            <span className="text-sm font-medium flex items-center gap-1">
-              <CheckCircle className="w-4 h-4 text-primary" />
-              {completedQuestions}/{questions.length}
-            </span>
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={downloadPDF}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 text-sm"
+              >
+                <Download className="w-4 h-4" />
+                Baixar PDF
+              </Button>
+              <span className="text-sm font-medium flex items-center gap-1">
+                <CheckCircle className="w-4 h-4 text-primary" />
+                {completedQuestions}/{questions.length}
+              </span>
+            </div>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
