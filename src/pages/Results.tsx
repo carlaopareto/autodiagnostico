@@ -55,9 +55,8 @@ export const Results = () => {
     };
   };
   const exportToPDF = async () => {
-    const topEl = document.getElementById('results-top');
-    const tableEl = document.getElementById('results-table');
-    if (!topEl || !tableEl || !results) return;
+    const element = document.getElementById('results-container');
+    if (!element || !results) return;
 
     try {
       toast({
@@ -65,86 +64,67 @@ export const Results = () => {
         description: "Aguarde enquanto preparamos seu relatório."
       });
 
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
-      const marginLeft = 20;
-      const marginRight = 20;
-      const marginTop = 10;
-      const contentWidth = pageWidth - marginLeft - marginRight;
+      const imgWidth = pageWidth - 20;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      // 1) Captura do topo: título, data, pontuação geral e gráfico radar
-      const topCanvas = await html2canvas(topEl as HTMLElement, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff'
-      });
-      const topImgData = topCanvas.toDataURL('image/png');
-      const topImgWidth = contentWidth;
-      const topImgHeight = (topCanvas.height * topImgWidth) / topCanvas.width;
-      // Desenha topo na 1ª página
-      pdf.addImage(topImgData, 'PNG', marginLeft, marginTop, topImgWidth, Math.min(topImgHeight, pageHeight - marginTop - 10));
+      // Se a imagem for maior que uma página, dividir em múltiplas páginas
+      if (imgHeight <= pageHeight - 20) {
+        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+      } else {
+        let remainingHeight = imgHeight;
+        let yPosition = 0;
+        let pageNumber = 0;
 
-      // 2) Seções novas: pontos fortes e pontos de atenção (texto simples)
-      pdf.addPage();
-      let y = marginTop;
+        while (remainingHeight > 0) {
+          if (pageNumber > 0) {
+            pdf.addPage();
+          }
 
-      const sortedDimensions = [...results.dimensions].sort((a, b) => b.average - a.average);
-      const topDimensions = sortedDimensions.slice(0, 2);
-      const bottomDimensions = sortedDimensions.slice(-2).reverse();
+          const currentPageHeight = Math.min(remainingHeight, pageHeight - 20);
+          const srcY = yPosition;
+          const srcHeight = (currentPageHeight * canvas.width) / imgWidth;
 
-      pdf.setFont('helvetica', 'bold');
-      pdf.setFontSize(14);
-      pdf.text('Dimensões que sua organização está muito bem', marginLeft, y);
-      y += 10;
+          // Criar canvas temporário para a seção atual
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = canvas.width;
+          tempCanvas.height = srcHeight;
+          const tempCtx = tempCanvas.getContext('2d');
+          
+          if (tempCtx) {
+            tempCtx.drawImage(canvas, 0, srcY, canvas.width, srcHeight, 0, 0, canvas.width, srcHeight);
+            const tempImgData = tempCanvas.toDataURL('image/png');
+            pdf.addImage(tempImgData, 'PNG', 10, 10, imgWidth, currentPageHeight);
+          }
 
-      pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(11);
-      topDimensions.forEach((d) => {
-        if (y > pageHeight - 20) { pdf.addPage(); y = marginTop; }
-        pdf.text(`• ${d.dimension}`, marginLeft + 5, y);
-        y += 7;
-      });
-
-      y += 8;
-      pdf.setFont('helvetica', 'bold');
-      pdf.setFontSize(14);
-      pdf.text('Dimensões nas quais sua organização deve se desenvolver', marginLeft, y);
-      y += 10;
-
-      pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(11);
-      bottomDimensions.forEach((d) => {
-        if (y > pageHeight - 20) { pdf.addPage(); y = marginTop; }
-        pdf.text(`• ${d.dimension}`, marginLeft + 5, y);
-        y += 7;
-      });
-
-      // 3) Tabela de resumo por dimensão (capturada como imagem)
-      pdf.addPage();
-      const tableCanvas = await html2canvas(tableEl as HTMLElement, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff'
-      });
-      const tableImgData = tableCanvas.toDataURL('image/png');
-      const tableImgWidth = contentWidth;
-      const tableImgHeight = (tableCanvas.height * tableImgWidth) / tableCanvas.width;
-      pdf.addImage(tableImgData, 'PNG', marginLeft, marginTop, tableImgWidth, Math.min(tableImgHeight, pageHeight - marginTop - 10));
+          remainingHeight -= currentPageHeight;
+          yPosition += srcHeight;
+          pageNumber++;
+        }
+      }
 
       const fileName = `autodiagnostico-${new Date().toISOString().split('T')[0]}.pdf`;
       pdf.save(fileName);
+      
       toast({
-        title: 'PDF gerado com sucesso!',
+        title: "PDF gerado com sucesso!",
         description: `Arquivo ${fileName} foi baixado.`
       });
     } catch (error) {
       toast({
-        title: 'Erro ao gerar PDF',
-        description: 'Ocorreu um erro durante a geração do relatório.',
-        variant: 'destructive'
+        title: "Erro ao gerar PDF",
+        description: "Ocorreu um erro durante a geração do relatório.",
+        variant: "destructive"
       });
     }
   };
@@ -178,64 +158,61 @@ export const Results = () => {
   return <div className="min-h-screen bg-[var(--gradient-subtle)]">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <div id="results-container" className="space-y-8">
-          {/* Top section for PDF capture */}
-          <div id="results-top" className="space-y-8">
-            {/* Header */}
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold mb-4 bg-[var(--gradient-primary)] bg-clip-text text-[#131413]/0">
-                Resultados do Autodiagnóstico
-              </h1>
-              <p className="text-muted-foreground text-lg mb-2">
-                Relatório completo da avaliação institucional
-              </p>
-              <Badge variant="secondary" className="text-sm">
-                Gerado em {results.completedAt.toLocaleDateString('pt-BR')}
-              </Badge>
-            </div>
-
-            {/* Overall Score */}
-            <Card className="shadow-[var(--shadow-card)] border-border/50">
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-lg">Pontuação Geral</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-4xl font-bold mb-2 bg-[var(--gradient-primary)] bg-clip-text text-transparent bg-[#1b1c1b]">
-                  {results.overallAverage}/10
-                </div>
-                <Badge className={getScoreColor(results.overallAverage)}>
-                  {getPerformanceText(results.overallAverage)}
-                </Badge>
-              </CardContent>
-            </Card>
-
-            {/* Radar Chart */}
-            <Card className="shadow-[var(--shadow-card)] border-border/50">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5" />
-                  Gráfico de Desempenho por Dimensão
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-96">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={radarData}>
-                      <PolarGrid stroke="hsl(var(--border))" />
-                      <PolarAngleAxis dataKey="dimension" tick={{
-                        fontSize: 12,
-                        fill: 'hsl(var(--foreground))'
-                      }} className="text-xs" />
-                      <PolarRadiusAxis angle={90} domain={[0, 10]} tick={{
-                        fontSize: 10,
-                        fill: 'hsl(var(--muted-foreground))'
-                      }} />
-                      <Radar name="Pontuação" dataKey="value" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.3} strokeWidth={2} />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-4 bg-[var(--gradient-primary)] bg-clip-text text-[#131413]/0">
+              Resultados do Autodiagnóstico
+            </h1>
+            <p className="text-muted-foreground text-lg mb-2">
+              Relatório completo da avaliação institucional
+            </p>
+            <Badge variant="secondary" className="text-sm">
+              Gerado em {results.completedAt.toLocaleDateString('pt-BR')}
+            </Badge>
           </div>
+
+          {/* Overall Score */}
+          <Card className="shadow-[var(--shadow-card)] border-border/50">
+            <CardHeader className="text-center pb-4">
+              <CardTitle className="text-lg">Pontuação Geral</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center">
+              <div className="text-4xl font-bold mb-2 bg-[var(--gradient-primary)] bg-clip-text text-transparent bg-[#1b1c1b]">
+                {results.overallAverage}/10
+              </div>
+              <Badge className={getScoreColor(results.overallAverage)}>
+                {getPerformanceText(results.overallAverage)}
+              </Badge>
+            </CardContent>
+          </Card>
+
+          {/* Radar Chart */}
+          <Card className="shadow-[var(--shadow-card)] border-border/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="w-5 h-5" />
+                Gráfico de Desempenho por Dimensão
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-96">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart data={radarData}>
+                    <PolarGrid stroke="hsl(var(--border))" />
+                    <PolarAngleAxis dataKey="dimension" tick={{
+                      fontSize: 12,
+                      fill: 'hsl(var(--foreground))'
+                    }} className="text-xs" />
+                    <PolarRadiusAxis angle={90} domain={[0, 10]} tick={{
+                      fontSize: 10,
+                      fill: 'hsl(var(--muted-foreground))'
+                    }} />
+                    <Radar name="Pontuação" dataKey="value" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.3} strokeWidth={2} />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Analysis Sections */}
           {(() => {
@@ -246,7 +223,7 @@ export const Results = () => {
             return (
               <>
                 {/* Seção pontos fortes */}
-          <Card id="results-table" className="shadow-[var(--shadow-card)] border-border/50">
+          <Card className="shadow-[var(--shadow-card)] border-border/50">
                   <CardHeader>
                     <CardTitle>Dimensões que sua organização está muito bem</CardTitle>
                   </CardHeader>
