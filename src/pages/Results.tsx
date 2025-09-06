@@ -183,23 +183,33 @@ export const Results = () => {
 
             return (
               <>
-                <div className="mt-12">
-                  <h2 className="text-xl font-bold mb-4">Dimensões que sua organização está muito bem</h2>
-                  <ul className="list-disc pl-6 text-muted-foreground">
-                    {topDimensions.map((d) => (
-                      <li key={d.dimension}><strong>{d.dimension}</strong></li>
-                    ))}
-                  </ul>
-                </div>
+                {/* Seção pontos fortes */}
+                <Card className="shadow-[var(--shadow-card)] border-border/50">
+                  <CardHeader>
+                    <CardTitle>Dimensões que sua organização está muito bem</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc pl-6 text-muted-foreground">
+                      {topDimensions.map((d) => (
+                        <li key={d.dimension}><strong>{d.dimension}</strong></li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
 
-                <div className="mt-8">
-                  <h2 className="text-xl font-bold mb-4">Dimensões nas quais sua organização deve se desenvolver</h2>
-                  <ul className="list-disc pl-6 text-muted-foreground">
-                    {bottomDimensions.map((d) => (
-                      <li key={d.dimension}><strong>{d.dimension}</strong></li>
-                    ))}
-                  </ul>
-                </div>
+                {/* Seção pontos de atenção */}
+                <Card className="shadow-[var(--shadow-card)] border-border/50">
+                  <CardHeader>
+                    <CardTitle>Dimensões nas quais sua organização deve se desenvolver</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc pl-6 text-muted-foreground">
+                      {bottomDimensions.map((d) => (
+                        <li key={d.dimension}><strong>{d.dimension}</strong></li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
               </>
             );
           })()}
