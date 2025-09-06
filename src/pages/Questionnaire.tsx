@@ -139,6 +139,21 @@ export const Questionnaire = () => {
                 <Download className="w-4 h-4" />
                 Baixar PDF
               </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 text-sm"
+              >
+                <a 
+                  href="https://docs.google.com/spreadsheets/u/3/d/1wHt8KwY5KBQqGCSf9pXl35TlEPGTqIL-mjURWYOl3IQ/copy?pli=1" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Download className="w-4 h-4" />
+                  Baixar Excel
+                </a>
+              </Button>
               <span className="text-sm font-medium flex items-center gap-1">
                 <CheckCircle className="w-4 h-4 text-primary" />
                 {completedQuestions}/{questions.length}
