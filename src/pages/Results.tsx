@@ -175,6 +175,35 @@ export const Results = () => {
             </CardContent>
           </Card>
 
+          {/* Analysis Sections */}
+          {(() => {
+            const sortedDimensions = [...results.dimensions].sort((a, b) => b.average - a.average);
+            const topDimensions = sortedDimensions.slice(0, 2);
+            const bottomDimensions = sortedDimensions.slice(-2).reverse();
+
+            return (
+              <>
+                <div className="mt-12">
+                  <h2 className="text-xl font-bold mb-4">Dimensões que sua organização está muito bem</h2>
+                  <ul className="list-disc pl-6 text-muted-foreground">
+                    {topDimensions.map((d) => (
+                      <li key={d.dimension}><strong>{d.dimension}</strong></li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-8">
+                  <h2 className="text-xl font-bold mb-4">Dimensões nas quais sua organização deve se desenvolver</h2>
+                  <ul className="list-disc pl-6 text-muted-foreground">
+                    {bottomDimensions.map((d) => (
+                      <li key={d.dimension}><strong>{d.dimension}</strong></li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            );
+          })()}
+
           {/* Results Table */}
           <Card className="shadow-[var(--shadow-card)] border-border/50">
             <CardHeader>
