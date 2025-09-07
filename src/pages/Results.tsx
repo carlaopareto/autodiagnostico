@@ -55,8 +55,7 @@ export const Results = () => {
     };
   };
   const exportToPDF = async () => {
-    const element = document.getElementById('results-container');
-    if (!element || !results) return;
+    if (!results) return;
 
     try {
       toast({
@@ -64,54 +63,146 @@ export const Results = () => {
         description: "Aguarde enquanto preparamos seu relatório."
       });
 
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff'
-      });
-
-      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pageWidth - 20;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let yPosition = 20;
 
-      // Se a imagem for maior que uma página, dividir em múltiplas páginas
-      if (imgHeight <= pageHeight - 20) {
-        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-      } else {
-        let remainingHeight = imgHeight;
-        let yPosition = 0;
-        let pageNumber = 0;
+      // Calcular top e bottom dimensions (mesma lógica da tela)
+      const sortedDimensions = [...results.dimensions].sort((a, b) => b.average - a.average);
+      const topDimensions = sortedDimensions.slice(0, 2);
+      const bottomDimensions = sortedDimensions.slice(-2).reverse();
 
-        while (remainingHeight > 0) {
-          if (pageNumber > 0) {
-            pdf.addPage();
-          }
+      // Título e data
+      pdf.setFontSize(18);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Resultados do Autodiagnóstico", pageWidth / 2, yPosition, { align: 'center' });
+      yPosition += 10;
 
-          const currentPageHeight = Math.min(remainingHeight, pageHeight - 20);
-          const srcY = yPosition;
-          const srcHeight = (currentPageHeight * canvas.width) / imgWidth;
+      pdf.setFontSize(12);
+      pdf.setFont("helvetica", "normal");
+      pdf.text(`Gerado em ${results.completedAt.toLocaleDateString('pt-BR')}`, pageWidth / 2, yPosition, { align: 'center' });
+      yPosition += 20;
 
-          // Criar canvas temporário para a seção atual
-          const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = canvas.width;
-          tempCanvas.height = srcHeight;
-          const tempCtx = tempCanvas.getContext('2d');
-          
-          if (tempCtx) {
-            tempCtx.drawImage(canvas, 0, srcY, canvas.width, srcHeight, 0, 0, canvas.width, srcHeight);
-            const tempImgData = tempCanvas.toDataURL('image/png');
-            pdf.addImage(tempImgData, 'PNG', 10, 10, imgWidth, currentPageHeight);
-          }
+      // Pontuação geral
+      pdf.setFontSize(16);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Pontuação Geral", pageWidth / 2, yPosition, { align: 'center' });
+      yPosition += 10;
 
-          remainingHeight -= currentPageHeight;
-          yPosition += srcHeight;
-          pageNumber++;
-        }
+      pdf.setFontSize(24);
+      pdf.text(`${results.overallAverage}/10`, pageWidth / 2, yPosition, { align: 'center' });
+      yPosition += 8;
+
+      pdf.setFontSize(12);
+      pdf.setFont("helvetica", "normal");
+      const performanceText = results.overallAverage >= 8 ? 'Excelente' : 
+                             results.overallAverage >= 6 ? 'Bom' : 
+                             results.overallAverage >= 4 ? 'Regular' : 'Requer atenção';
+      pdf.text(performanceText, pageWidth / 2, yPosition, { align: 'center' });
+      yPosition += 25;
+
+      // Capturar apenas o gráfico radar
+      const chartElement = document.querySelector('.recharts-wrapper');
+      if (chartElement) {
+        const chartCanvas = await html2canvas(chartElement as HTMLElement, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff'
+        });
+
+        const chartImgData = chartCanvas.toDataURL('image/png');
+        const chartWidth = 120;
+        const chartHeight = (chartCanvas.height * chartWidth) / chartCanvas.width;
+        pdf.addImage(chartImgData, 'PNG', (pageWidth - chartWidth) / 2, yPosition, chartWidth, chartHeight);
+        yPosition += chartHeight + 20;
       }
+
+      // Verificar se precisa de nova página
+      if (yPosition > pageWidth - 60) {
+        pdf.addPage();
+        yPosition = 20;
+      }
+
+      // Seção pontos fortes
+      pdf.setFontSize(14);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Dimensões que sua organização está muito bem", 20, yPosition);
+      yPosition += 10;
+
+      pdf.setFontSize(11);
+      pdf.setFont("helvetica", "normal");
+      topDimensions.forEach((d) => {
+        pdf.setFont("helvetica", "normal");
+        pdf.text("•", 25, yPosition);
+        pdf.setFont("helvetica", "bold");
+        pdf.text(d.dimension, 30, yPosition);
+        yPosition += 7;
+      });
+
+      yPosition += 10;
+
+      // Seção pontos de atenção
+      pdf.setFontSize(14);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Dimensões nas quais sua organização deve se desenvolver", 20, yPosition);
+      yPosition += 10;
+
+      pdf.setFontSize(11);
+      pdf.setFont("helvetica", "normal");
+      bottomDimensions.forEach((d) => {
+        pdf.setFont("helvetica", "normal");
+        pdf.text("•", 25, yPosition);
+        pdf.setFont("helvetica", "bold");
+        pdf.text(d.dimension, 30, yPosition);
+        yPosition += 7;
+      });
+
+      yPosition += 12;
+
+      // Verificar se precisa de nova página para tabela
+      if (yPosition > pageWidth - 80) {
+        pdf.addPage();
+        yPosition = 20;
+      }
+
+      // Tabela de resumo
+      pdf.setFontSize(14);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Resumo por Dimensão", 20, yPosition);
+      yPosition += 15;
+
+      // Cabeçalho da tabela
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Dimensão", 20, yPosition);
+      pdf.text("Perguntas", 120, yPosition);
+      pdf.text("Pontuação", 145, yPosition);
+      pdf.text("Desempenho", 170, yPosition);
+      yPosition += 8;
+
+      // Linha do cabeçalho
+      pdf.line(20, yPosition - 2, pageWidth - 20, yPosition - 2);
+      yPosition += 3;
+
+      // Dados da tabela
+      pdf.setFont("helvetica", "normal");
+      results.dimensions.forEach((dimension) => {
+        if (yPosition > pageWidth - 30) {
+          pdf.addPage();
+          yPosition = 30;
+        }
+
+        const performanceText = dimension.average >= 8 ? 'Excelente' : 
+                               dimension.average >= 6 ? 'Bom' : 
+                               dimension.average >= 4 ? 'Regular' : 'Requer atenção';
+
+        pdf.text(dimension.dimension.substring(0, 35) + (dimension.dimension.length > 35 ? '...' : ''), 20, yPosition);
+        pdf.text(dimension.questions.toString(), 125, yPosition);
+        pdf.text(`${dimension.average}/10`, 150, yPosition);
+        pdf.text(performanceText, 175, yPosition);
+        yPosition += 8;
+      });
 
       const fileName = `autodiagnostico-${new Date().toISOString().split('T')[0]}.pdf`;
       pdf.save(fileName);
