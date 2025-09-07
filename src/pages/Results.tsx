@@ -56,13 +56,11 @@ export const Results = () => {
   };
   const exportToPDF = async () => {
     if (!results) return;
-
     try {
       toast({
         title: "Gerando PDF...",
         description: "Aguarde enquanto preparamos seu relatório."
       });
-
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
       let yPosition = 20;
@@ -75,30 +73,35 @@ export const Results = () => {
       // Título e data
       pdf.setFontSize(18);
       pdf.setFont("helvetica", "bold");
-      pdf.text("Resultados do Autodiagnóstico", pageWidth / 2, yPosition, { align: 'center' });
+      pdf.text("Resultados do Autodiagnóstico", pageWidth / 2, yPosition, {
+        align: 'center'
+      });
       yPosition += 10;
-
       pdf.setFontSize(12);
       pdf.setFont("helvetica", "normal");
-      pdf.text(`Gerado em ${results.completedAt.toLocaleDateString('pt-BR')}`, pageWidth / 2, yPosition, { align: 'center' });
+      pdf.text(`Gerado em ${results.completedAt.toLocaleDateString('pt-BR')}`, pageWidth / 2, yPosition, {
+        align: 'center'
+      });
       yPosition += 20;
 
       // Pontuação geral
       pdf.setFontSize(16);
       pdf.setFont("helvetica", "bold");
-      pdf.text("Pontuação Geral", pageWidth / 2, yPosition, { align: 'center' });
+      pdf.text("Pontuação Geral", pageWidth / 2, yPosition, {
+        align: 'center'
+      });
       yPosition += 10;
-
       pdf.setFontSize(24);
-      pdf.text(`${results.overallAverage}/10`, pageWidth / 2, yPosition, { align: 'center' });
+      pdf.text(`${results.overallAverage}/10`, pageWidth / 2, yPosition, {
+        align: 'center'
+      });
       yPosition += 8;
-
       pdf.setFontSize(12);
       pdf.setFont("helvetica", "normal");
-      const performanceText = results.overallAverage >= 8 ? 'Excelente' : 
-                             results.overallAverage >= 6 ? 'Bom' : 
-                             results.overallAverage >= 4 ? 'Regular' : 'Requer atenção';
-      pdf.text(performanceText, pageWidth / 2, yPosition, { align: 'center' });
+      const performanceText = results.overallAverage >= 8 ? 'Excelente' : results.overallAverage >= 6 ? 'Bom' : results.overallAverage >= 4 ? 'Regular' : 'Requer atenção';
+      pdf.text(performanceText, pageWidth / 2, yPosition, {
+        align: 'center'
+      });
       yPosition += 25;
 
       // Capturar apenas o gráfico radar
@@ -110,10 +113,9 @@ export const Results = () => {
           allowTaint: true,
           backgroundColor: '#ffffff'
         });
-
         const chartImgData = chartCanvas.toDataURL('image/png');
         const chartWidth = 120;
-        const chartHeight = (chartCanvas.height * chartWidth) / chartCanvas.width;
+        const chartHeight = chartCanvas.height * chartWidth / chartCanvas.width;
         pdf.addImage(chartImgData, 'PNG', (pageWidth - chartWidth) / 2, yPosition, chartWidth, chartHeight);
         yPosition += chartHeight + 20;
       }
@@ -129,17 +131,15 @@ export const Results = () => {
       pdf.setFont("helvetica", "bold");
       pdf.text("Dimensões que sua organização está muito bem", 20, yPosition);
       yPosition += 10;
-
       pdf.setFontSize(11);
       pdf.setFont("helvetica", "normal");
-      topDimensions.forEach((d) => {
+      topDimensions.forEach(d => {
         pdf.setFont("helvetica", "normal");
         pdf.text("•", 25, yPosition);
         pdf.setFont("helvetica", "bold");
         pdf.text(d.dimension, 30, yPosition);
         yPosition += 7;
       });
-
       yPosition += 10;
 
       // Seção pontos de atenção
@@ -147,17 +147,15 @@ export const Results = () => {
       pdf.setFont("helvetica", "bold");
       pdf.text("Dimensões nas quais sua organização deve se desenvolver", 20, yPosition);
       yPosition += 10;
-
       pdf.setFontSize(11);
       pdf.setFont("helvetica", "normal");
-      bottomDimensions.forEach((d) => {
+      bottomDimensions.forEach(d => {
         pdf.setFont("helvetica", "normal");
         pdf.text("•", 25, yPosition);
         pdf.setFont("helvetica", "bold");
         pdf.text(d.dimension, 30, yPosition);
         yPosition += 7;
       });
-
       yPosition += 12;
 
       // Verificar se precisa de nova página para tabela
@@ -187,26 +185,20 @@ export const Results = () => {
 
       // Dados da tabela
       pdf.setFont("helvetica", "normal");
-      results.dimensions.forEach((dimension) => {
+      results.dimensions.forEach(dimension => {
         if (yPosition > pageWidth - 30) {
           pdf.addPage();
           yPosition = 30;
         }
-
-        const performanceText = dimension.average >= 8 ? 'Excelente' : 
-                               dimension.average >= 6 ? 'Bom' : 
-                               dimension.average >= 4 ? 'Regular' : 'Requer atenção';
-
+        const performanceText = dimension.average >= 8 ? 'Excelente' : dimension.average >= 6 ? 'Bom' : dimension.average >= 4 ? 'Regular' : 'Requer atenção';
         pdf.text(dimension.dimension.substring(0, 35) + (dimension.dimension.length > 35 ? '...' : ''), 20, yPosition);
         pdf.text(dimension.questions.toString(), 125, yPosition);
         pdf.text(`${dimension.average}/10`, 150, yPosition);
         pdf.text(performanceText, 175, yPosition);
         yPosition += 8;
       });
-
       const fileName = `autodiagnostico-${new Date().toISOString().split('T')[0]}.pdf`;
       pdf.save(fileName);
-      
       toast({
         title: "PDF gerado com sucesso!",
         description: `Arquivo ${fileName} foi baixado.`
@@ -291,13 +283,13 @@ export const Results = () => {
                   <RadarChart data={radarData}>
                     <PolarGrid stroke="hsl(var(--border))" />
                     <PolarAngleAxis dataKey="dimension" tick={{
-                      fontSize: 12,
-                      fill: 'hsl(var(--foreground))'
-                    }} className="text-xs" />
+                    fontSize: 12,
+                    fill: 'hsl(var(--foreground))'
+                  }} className="text-xs" />
                     <PolarRadiusAxis angle={90} domain={[0, 10]} tick={{
-                      fontSize: 10,
-                      fill: 'hsl(var(--muted-foreground))'
-                    }} />
+                    fontSize: 10,
+                    fill: 'hsl(var(--muted-foreground))'
+                  }} />
                     <Radar name="Pontuação" dataKey="value" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.3} strokeWidth={2} />
                   </RadarChart>
                 </ResponsiveContainer>
@@ -307,12 +299,10 @@ export const Results = () => {
 
           {/* Analysis Sections */}
           {(() => {
-            const sortedDimensions = [...results.dimensions].sort((a, b) => b.average - a.average);
-            const topDimensions = sortedDimensions.slice(0, 2);
-            const bottomDimensions = sortedDimensions.slice(-2).reverse();
-
-            return (
-              <>
+          const sortedDimensions = [...results.dimensions].sort((a, b) => b.average - a.average);
+          const topDimensions = sortedDimensions.slice(0, 2);
+          const bottomDimensions = sortedDimensions.slice(-2).reverse();
+          return <>
                 {/* Seção pontos fortes */}
           <Card className="shadow-[var(--shadow-card)] border-border/50">
                   <CardHeader>
@@ -320,9 +310,7 @@ export const Results = () => {
                   </CardHeader>
                   <CardContent>
                     <ul className="list-disc pl-6 text-muted-foreground">
-                      {topDimensions.map((d) => (
-                        <li key={d.dimension}><strong>{d.dimension}</strong></li>
-                      ))}
+                      {topDimensions.map(d => <li key={d.dimension}><strong>{d.dimension}</strong></li>)}
                     </ul>
                   </CardContent>
                 </Card>
@@ -334,15 +322,12 @@ export const Results = () => {
                   </CardHeader>
                   <CardContent>
                     <ul className="list-disc pl-6 text-muted-foreground">
-                      {bottomDimensions.map((d) => (
-                        <li key={d.dimension}><strong>{d.dimension}</strong></li>
-                      ))}
+                      {bottomDimensions.map(d => <li key={d.dimension}><strong>{d.dimension}</strong></li>)}
                     </ul>
                   </CardContent>
                 </Card>
-              </>
-            );
-          })()}
+              </>;
+        })()}
 
           {/* Results Table */}
           <Card className="shadow-[var(--shadow-card)] border-border/50">
@@ -384,7 +369,7 @@ export const Results = () => {
             <ArrowLeft className="w-4 h-4" />
             Voltar ao início
           </Button>
-          <Button onClick={exportToPDF} className="flex items-center gap-2 bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] bg-[#9620a3] text-[#0f100f]">
+          <Button onClick={exportToPDF} className="flex items-center gap-2 bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] text-[#0f100f] bg-[#95a1eb]">
             <FileDown className="w-4 h-4" />
             Exportar PDF
           </Button>
