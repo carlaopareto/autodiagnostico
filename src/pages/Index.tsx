@@ -4,30 +4,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ClipboardList, BarChart3, FileText } from "lucide-react";
 import conjuntaLogo from "@/assets/conjunta-logo.png";
-
 const Index = () => {
   const navigate = useNavigate();
-
-  const features = [
-    {
-      icon: ClipboardList,
-      title: "Questionário Estruturado",
-      description: "Perguntas organizadas por dimensões e categorias para avaliação completa",
-    },
-    {
-      icon: BarChart3,
-      title: "Análise Visual",
-      description: "Gráfico radar mostra o desempenho em cada dimensão avaliada",
-    },
-    {
-      icon: FileText,
-      title: "Relatório em PDF",
-      description: "Exporte seus resultados em formato profissional para compartilhar",
-    },
-  ];
-
-  return (
-    <div className="min-h-screen bg-[var(--gradient-subtle)]">
+  const features = [{
+    icon: ClipboardList,
+    title: "Questionário Estruturado",
+    description: "Perguntas organizadas por dimensões e categorias para avaliação completa"
+  }, {
+    icon: BarChart3,
+    title: "Análise Visual",
+    description: "Gráfico radar mostra o desempenho em cada dimensão avaliada"
+  }, {
+    icon: FileText,
+    title: "Relatório em PDF",
+    description: "Exporte seus resultados em formato profissional para compartilhar"
+  }];
+  return <div className="min-h-screen bg-[var(--gradient-subtle)]">
       <div className="container mx-auto px-4 py-16 max-w-5xl">
         
         {/* Hero Section */}
@@ -39,22 +31,14 @@ const Index = () => {
             Avalie a maturidade e o desenvolvimento da sua organização através de um instrumento
             estruturado que analisa diferentes dimensões organizacionais.
           </p>
-          <Button
-            size="lg"
-            onClick={() => navigate("/questionnaire")}
-            className="px-8 py-4 text-lg font-semibold bg-[#323b9e] text-white hover:opacity-90 rounded-2xl shadow"
-          >
+          <Button size="lg" onClick={() => navigate("/questionnaire")} className="px-8 py-4 text-lg font-semibold bg-[#323b9e] text-white hover:opacity-90 rounded-2xl shadow">
             Iniciar Avaliação
           </Button>
         </div>
 
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-6 mb-20">
-          {features.map((feature, index) => (
-            <Card
-              key={index}
-              className="border border-border/40 shadow-sm hover:shadow-md transition rounded-xl"
-            >
+          {features.map((feature, index) => <Card key={index} className="border border-border/40 shadow-sm hover:shadow-md transition rounded-xl">
               <CardHeader className="text-center pb-2">
                 <feature.icon className="w-7 h-7 mx-auto mb-3 text-primary" />
                 <CardTitle className="text-base font-semibold">{feature.title}</CardTitle>
@@ -62,8 +46,7 @@ const Index = () => {
               <CardContent className="text-center text-sm text-muted-foreground">
                 {feature.description}
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
 
         {/* FAQ Section */}
@@ -122,23 +105,12 @@ const Index = () => {
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-8">Realização</h2>
           <div className="flex justify-center items-center">
-            <a
-              href="https://conjunta.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block hover:opacity-80 transition-opacity"
-            >
-              <img
-                src={conjuntaLogo}
-                alt="Plataforma Conjunta"
-                className="h-16 w-auto"
-              />
+            <a href="https://conjunta.org/" target="_blank" rel="noopener noreferrer" className="inline-block hover:opacity-80 transition-opacity">
+              <img src={conjuntaLogo} alt="Plataforma Conjunta" className="h-16 max-h-16 " />
             </a>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
