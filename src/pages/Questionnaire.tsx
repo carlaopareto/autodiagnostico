@@ -6,7 +6,7 @@ import { QuestionCard } from '@/components/QuestionCard';
 import { questions } from '@/data/questions';
 import { Answer } from '@/types/assessment';
 import { useToast } from '@/hooks/use-toast';
-import { CheckCircle, Download } from 'lucide-react';
+import { CheckCircle, Download, ArrowLeft } from 'lucide-react';
 import jsPDF from 'jspdf';
 export const Questionnaire = () => {
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -128,7 +128,18 @@ export const Questionnaire = () => {
       <div className="sticky top-0 bg-background/95 backdrop-blur-sm shadow-sm border-b z-10">
         <div className="container mx-auto px-4 py-4 max-w-4xl">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium text-muted-foreground">Progresso</span>
+            <div className="flex items-center gap-3">
+              <Button
+                onClick={() => navigate('/')}
+                variant="ghost"
+                size="sm"
+                className="flex items-center gap-2 text-sm"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Voltar
+              </Button>
+              <span className="text-sm font-medium text-muted-foreground">Progresso</span>
+            </div>
             <div className="flex items-center gap-4">
               <Button
                 onClick={downloadPDF}
