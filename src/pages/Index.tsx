@@ -27,7 +27,10 @@ const Index = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#141614]">
             Autodiagnóstico de<br />Desenvolvimento Institucional
           </h1>
-          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">Esse é um instrumento criado pela Move Social com o apoio da Plataforma Conjunta para avaliar a maturidade e o desenvolvimento institucional de organizações da sociedade civil. Com base em um questionário de 39 perguntas acerca de diferentes dimensões organizacionais, você consegue avaliar o grau de desenvolvimento institucional de sua OSC e áreas prioritárias para desenvolvimento.</p>
+          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+            Avalie a maturidade e o desenvolvimento da sua organização através de um instrumento
+            estruturado que analisa diferentes dimensões organizacionais.
+          </p>
           <Button size="lg" onClick={() => navigate("/questionnaire")} className="px-8 py-4 text-lg font-semibold bg-[#323b9e] text-white hover:opacity-90 rounded-2xl shadow">
             Iniciar Avaliação
           </Button>
@@ -65,19 +68,19 @@ const Index = () => {
             </AccordionItem>
 
             <AccordionItem value="dimensoes">
-              <AccordionTrigger>Gestão e planejamento estratégico: A gestão estratégica está relacionada com a identidade da organização e envolve a capacidade de dar direcionamento para a organização e para seus programas e projetos, garantir o foco do trabalho com coerência estratégica, dedicar tempo para planejar e aprender sobre a prática institucional, além de comunicar para o mundo, de forma coerente, seus resultados. </AccordionTrigger>
+              <AccordionTrigger>Dimensões avaliadas</AccordionTrigger>
               <AccordionContent>
                 <ul className="list-disc pl-6 space-y-2 text-sm text-muted-foreground">
-                  <li><strong>Gestão e planejamento estratégico:</strong> A gestão estratégica está relacionada com a identidade da organização...</li>
-                  <li><strong>Governança:</strong> A governança diz respeito aos mecanismos de participação nos processos decisórios...</li>
-                  <li><strong>Gestão e desenvolvimento de pessoas:</strong> A gestão de pessoas está relacionada às políticas de recursos humanos...</li>
-                  <li><strong>Incidência em políticas públicas:</strong> A incidência em políticas públicas diz sobre o conhecimento das políticas relacionadas ao campo de trabalho...</li>
-                  <li><strong>Redes e alianças:</strong> Diz respeito à forma de atuação integrada e colaborativa com atores no campo...</li>
-                  <li><strong>Planejamento de projetos e programas:</strong> Relacionado à definição periódica das estratégias dos programas...</li>
-                  <li><strong>Monitoramento, avaliação e aprendizagem:</strong> Refere-se à forma e periodicidade da coleta de dados...</li>
-                  <li><strong>Captação de recursos:</strong> Refere-se às estratégias de financiamento, diversificação de fontes e sustentabilidade financeira...</li>
-                  <li><strong>Comunicação:</strong> Refere-se às estratégias e canais de relacionamento e divulgação dos trabalhos...</li>
-                  <li><strong>Gestão administrativa, financeira e jurídica:</strong> Refere-se ao controle financeiro e procedimentos administrativos da organização.</li>
+                  <li><strong>Gestão e planejamento estratégico:</strong> A gestão estratégica está relacionada com a identidade da organização e envolve a capacidade de dar direcionamento para a organização e para seus programas e projetos, garantir o foco do trabalho com coerência estratégica, dedicar tempo para planejar e aprender sobre a prática institucional, além de comunicar para o mundo, de forma coerente, seus resultados.</li>
+                  <li><strong>Governança:</strong> A governança diz respeito aos mecanismos de participação nos processos decisórios, assim como a organização dos papéis de cada um(a) nas instâncias de governança da instituição.</li>
+                  <li><strong>Gestão e desenvolvimento de pessoas:</strong> A gestão de pessoas está relacionada às políticas de recursos humanos que regem as relações na organização. Envolve a descrição das responsabilidades e atribuições, os planos de desenvolvimento da equipe, cuidado com a qualidade das relações na equipe e a comunicação interna. </li>
+                  <li><strong>Incidência em políticas públicas:</strong> A incidência em políticas públicas diz sobre o conhecimento das políticas relacionadas ao campo de trabalho e à influência sobre formuladores de políticas públicas.</li>
+                  <li><strong>Redes e alianças:</strong> Redes e alianças diz respeito a forma de atuação integrada e colaborativa com atores no campo que tem objetivos similares.</li>
+                  <li><strong>Planejamento de projetos e programas:</strong> O planejamento diz respeito à definição periódica das estratégias dos programas, com relação permanente aos objetivos e missão da organização e com base em análise de necessidades e oportunidades.</li>
+                  <li><strong>Monitoramento, avaliação e aprendizagem:</strong> Monitoramento e avaliação refere-se à forma e à periodicidade da coleta de dados, sistematização dos resultados e utilização dos mesmos para aprendizagem da equipe e qualificação dos programas e projetos.</li>
+                  <li><strong>Captação de recursos:</strong> A captação de recursos diz respeito às estratégias de financiamento da organização, a diversificação das fontes de recursos e a sustentabilidade financeira das mesmas.</li>
+                  <li><strong>Comunicação:</strong> A comunicação se refere às estratégias e canais de relacionamento e divulgação dos trabalhos da organização junto a públicos internos e externos, incluindo sua conexão com a identidade organizacional.</li>
+                  <li><strong>Gestão administrativa, financeira e jurídica:</strong> A gestão administrativa e financeira refere-se ao controle financeiro e aos procedimentos administrativos da organização.</li>
                 </ul>
               </AccordionContent>
             </AccordionItem>
