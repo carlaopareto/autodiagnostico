@@ -65,7 +65,7 @@ const Index = () => {
             </AccordionItem>
 
             <AccordionItem value="dimensoes">
-              <AccordionTrigger>Dimensões avaliadas</AccordionTrigger>
+              <AccordionTrigger>Gestão e planejamento estratégico: A gestão estratégica está relacionada com a identidade da organização e envolve a capacidade de dar direcionamento para a organização e para seus programas e projetos, garantir o foco do trabalho com coerência estratégica, dedicar tempo para planejar e aprender sobre a prática institucional, além de comunicar para o mundo, de forma coerente, seus resultados. </AccordionTrigger>
               <AccordionContent>
                 <ul className="list-disc pl-6 space-y-2 text-sm text-muted-foreground">
                   <li><strong>Gestão e planejamento estratégico:</strong> A gestão estratégica está relacionada com a identidade da organização...</li>
