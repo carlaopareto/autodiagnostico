@@ -124,23 +124,24 @@ export const Questionnaire = () => {
     return acc;
   }, {} as Record<string, typeof questions>);
   return <div className="min-h-screen bg-[var(--gradient-subtle)]">
-      {/* Fixed Progress Bar */}
-      <div className="sticky top-0 bg-background/95 backdrop-blur-sm shadow-sm border-b z-10">
+      {/* Header with buttons */}
+      <div className="bg-background/95 backdrop-blur-sm shadow-sm border-b">
         <div className="container mx-auto px-4 py-4 max-w-4xl">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between">
+            <Button
+              onClick={() => navigate('/')}
+              variant="ghost"
+              size="sm"
+              className="flex items-center gap-2 text-sm"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Voltar
+            </Button>
+            
             <div className="flex items-center gap-3">
-              <Button
-                onClick={() => navigate('/')}
-                variant="ghost"
-                size="sm"
-                className="flex items-center gap-2 text-sm"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Voltar
-              </Button>
-              <span className="text-sm font-medium text-muted-foreground">Progresso</span>
-            </div>
-            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium text-muted-foreground">
+                Baixar o Autodiagnóstico:
+              </span>
               <Button
                 onClick={downloadPDF}
                 variant="outline"
@@ -165,11 +166,20 @@ export const Questionnaire = () => {
                   Baixar Excel
                 </a>
               </Button>
-              <span className="text-sm font-medium flex items-center gap-1">
-                <CheckCircle className="w-4 h-4 text-primary" />
-                {completedQuestions}/{questions.length}
-              </span>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Fixed Progress Bar */}
+      <div className="sticky top-0 bg-background/95 backdrop-blur-sm shadow-sm border-b z-10">
+        <div className="container mx-auto px-4 py-3 max-w-4xl">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-muted-foreground">Progresso</span>
+            <span className="text-sm font-medium flex items-center gap-1">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              {completedQuestions}/{questions.length}
+            </span>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
