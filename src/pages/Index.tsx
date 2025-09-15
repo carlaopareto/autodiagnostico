@@ -66,7 +66,7 @@ const Index = () => {
         </div>
 
         {/* FAQ Section */}
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto mb-20">
           <h2 className="text-2xl font-bold text-center mb-8">Perguntas Frequentes</h2>
           <Accordion type="single" collapsible className="w-full space-y-4">
             <AccordionItem value="instrumento">
@@ -115,6 +115,25 @@ const Index = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+        </div>
+
+        {/* Realização Section */}
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-8">Realização</h2>
+          <div className="flex justify-center items-center">
+            <a
+              href="https://conjunta.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block hover:opacity-80 transition-opacity"
+            >
+              <img
+                src="/placeholder.svg"
+                alt="Conjunta"
+                className="h-16 w-auto"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </div>
