@@ -27,10 +27,7 @@ const Index = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#141614]">
             Autodiagnóstico de<br />Desenvolvimento Institucional
           </h1>
-          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            Avalie a maturidade e o desenvolvimento da sua organização através de um instrumento
-            estruturado que analisa diferentes dimensões organizacionais.
-          </p>
+          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">Esse é um instrumento criado pela Move Social com o apoio da Plataforma Conjunta para avaliar a maturidade e o desenvolvimento institucional de organizações da sociedade civil. Com base em um questionário de 39 perguntas acerca de diferentes dimensões organizacionais, você consegue avaliar o grau de desenvolvimento institucional de sua OSC e áreas prioritárias para desenvolvimento.</p>
           <Button size="lg" onClick={() => navigate("/questionnaire")} className="px-8 py-4 text-lg font-semibold bg-[#323b9e] text-white hover:opacity-90 rounded-2xl shadow">
             Iniciar Avaliação
           </Button>
@@ -56,7 +53,7 @@ const Index = () => {
             <AccordionItem value="instrumento">
               <AccordionTrigger>Sobre o instrumento</AccordionTrigger>
               <AccordionContent>
-                Este instrumento está estruturado em torno de 10 dimensões de desenvolvimento institucional - propostas a partir de um marco conceitual e metodológico já testado e consolidado - que se desdobram em um conjunto de 39 categorias. Cada uma delas possui uma pergunta correspondente, todas de múltipla escolha, contendo 4 alternativas de resposta. Portanto, foram propostos sempre 4 possíveis cenários para cada categoria avaliada, combinando elementos importantes a serem analisados em cada uma delas. A proposta de classificar as respostas em 4 possíveis estágios de desenvolvimento institucional tem como intenção identificar uma percepção geral dos profissionais que respondem ao questionário acerca do nível aproximado de desenvolvimento da organização em cada uma das 10 dimensões avaliadas. Será importante levar em conta que, em alguns casos, as respostas não irão descrever de maneira exata ou rigorosa a realidade da organização. É possível que seja necessário realizar um esforço de aproximação para assinalar a opção que mais se assemelha.
+                Este instrumento está estruturado em torno de 10 dimensões de desenvolvimento institucional* - propostas a partir de um marco conceitual e metodológico já testado** e consolidado - que se desdobram em um conjunto de 39 categorias. Cada uma delas possui uma pergunta correspondente, todas de múltipla escolha, contendo 4 alternativas de resposta. Portanto, foram propostos sempre 4 possíveis cenários para cada categoria avaliada, combinando elementos importantes a serem analisados em cada uma delas. A proposta de classificar as respostas em 4 possíveis estágios de desenvolvimento institucional tem como intenção identificar uma percepção geral dos profissionais que respondem ao questionário acerca do nível aproximado de desenvolvimento da organização em cada uma das 10 dimensões avaliadas. Será importante levar em conta que, em alguns casos, as respostas não irão descrever de maneira exata ou rigorosa a realidade da organização. É possível que seja necessário realizar um esforço de aproximação para assinalar a opção que mais se assemelha.
               </AccordionContent>
             </AccordionItem>
 
