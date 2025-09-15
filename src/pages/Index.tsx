@@ -28,8 +28,7 @@ const Index = () => {
             Autodiagnóstico de<br />Desenvolvimento Institucional
           </h1>
           <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            Avalie a maturidade e o desenvolvimento da sua organização através de um instrumento
-            estruturado que analisa diferentes dimensões organizacionais.
+            Esse é um instrumento criado pela Move Social com o apoio da Plataforma Conjunta para avaliar a maturidade e o desenvolvimento institucional de organizações da sociedade civil. Com base em um questionário de 39 perguntas acerca de diferentes dimensões organizacionais, você consegue avaliar o grau de desenvolvimento institucional de sua OSC e áreas prioritárias para desenvolvimento.
           </p>
           <Button size="lg" onClick={() => navigate("/questionnaire")} className="px-8 py-4 text-lg font-semibold bg-[#323b9e] text-white hover:opacity-90 rounded-2xl shadow">
             Iniciar Avaliação
