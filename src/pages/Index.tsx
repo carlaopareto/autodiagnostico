@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ClipboardList, BarChart3, FileText } from "lucide-react";
+import conjuntaLogo from "@/assets/conjunta-logo.png";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -128,8 +129,8 @@ const Index = () => {
               className="inline-block hover:opacity-80 transition-opacity"
             >
               <img
-                src="/placeholder.svg"
-                alt="Conjunta"
+                src={conjuntaLogo}
+                alt="Plataforma Conjunta"
                 className="h-16 w-auto"
               />
             </a>
