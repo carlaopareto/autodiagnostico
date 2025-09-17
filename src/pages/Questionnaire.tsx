@@ -108,6 +108,42 @@ export const Questionnaire = () => {
     });
   };
 
+  // Dimension descriptions and numbering
+  const dimensionInfo = {
+    'Gestão e planejamento estratégico': {
+      number: 1,
+      description: 'A gestão estratégica está relacionada com a identidade da organização e envolve a capacidade de dar direcionamento para a organização e para seus programas e projetos, garantir o foco do trabalho com coerência estratégica, dedicar tempo para planejar e aprender sobre a prática institucional, além de comunicar para o mundo, de forma coerente, seus resultados.'
+    },
+    'Governança': {
+      number: 2,
+      description: 'A governança refere-se às estruturas, processos e práticas através dos quais uma organização é dirigida e controlada. Envolve a definição de papéis e responsabilidades, tomada de decisões transparentes, prestação de contas e a criação de mecanismos que assegurem que a organização cumpra sua missão de forma ética e eficaz.'
+    },
+    'Gestão e desenvolvimento de pessoas': {
+      number: 3,
+      description: 'A gestão e desenvolvimento de pessoas abrange as políticas, práticas e processos relacionados ao capital humano da organização. Inclui recrutamento, desenvolvimento profissional, clima organizacional, gestão de conflitos e a criação de um ambiente que favoreça o crescimento pessoal e profissional dos colaboradores.'
+    },
+    'Planejamento de projetos e programas': {
+      number: 4,
+      description: 'O planejamento de projetos e programas envolve a capacidade de desenhar, estruturar e organizar as iniciativas da organização de forma alinhada à sua missão e estratégia. Inclui a definição de objetivos, metodologias, cronogramas e a participação dos beneficiários no processo de planejamento.'
+    },
+    'Monitoramento, avaliação e aprendizagem': {
+      number: 5,
+      description: 'Esta dimensão refere-se aos sistemas e práticas para acompanhar, medir e avaliar o desempenho e impacto das ações da organização. Envolve a coleta sistemática de dados, análise de resultados e a promoção de uma cultura de aprendizagem contínua que permita melhorias e ajustes.'
+    },
+    'Captação de recursos': {
+      number: 6,
+      description: 'A captação de recursos engloba as estratégias e práticas para obter e manter o financiamento necessário para as atividades da organização. Inclui a diversificação de fontes, sustentabilidade financeira e o desenvolvimento de relacionamentos sólidos com financiadores e parceiros.'
+    },
+    'Comunicação': {
+      number: 7,
+      description: 'A comunicação abrange as estratégias, canais e práticas utilizadas pela organização para se relacionar com seus diversos públicos. Envolve a definição de mensagens claras, escolha de canais apropriados e a comunicação efetiva dos resultados e impactos alcançados.'
+    },
+    'Gestão administrativa, financeira e jurídica': {
+      number: 8,
+      description: 'Esta dimensão refere-se aos processos e controles necessários para o funcionamento administrativo, financeiro e legal da organização. Inclui controles financeiros, cumprimento de obrigações legais, gestão de riscos e sistemas de informação que suportem a gestão organizacional.'
+    }
+  };
+
   // Group questions by dimension
   const questionsByDimension = questions.reduce((acc, question) => {
     if (!acc[question.dimension]) {
@@ -175,20 +211,35 @@ export const Questionnaire = () => {
         </div>
 
         {/* Questions by Dimension */}
-        {Object.entries(questionsByDimension).map(([dimension, dimensionQuestions]) => <div key={dimension} className="mb-8">
-            <div className="bg-card rounded-lg p-6 mb-6 shadow-[var(--shadow-card)] border-l-4 border-l-primary">
-              <h2 className="text-xl font-semibold mb-2">{dimension}</h2>
-              <p className="text-muted-foreground">
-                {dimensionQuestions.length} pergunta{dimensionQuestions.length > 1 ? 's' : ''}
-              </p>
+        {Object.entries(questionsByDimension).map(([dimension, dimensionQuestions]) => {
+          const info = dimensionInfo[dimension];
+          return (
+            <div key={dimension} className="mb-8">
+              <div className="bg-card rounded-lg p-6 mb-6 shadow-[var(--shadow-card)] border-l-4 border-l-primary">
+                <h2 className="text-xl font-semibold mb-3">
+                  Dimensão {info?.number} - {dimension}
+                </h2>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {info?.description}
+                </p>
+              </div>
+              
+              {dimensionQuestions.map((question, index) => {
+                const questionNumber = questions.findIndex(q => q.id === question.id) + 1;
+                const currentAnswer = answers.find(a => a.questionId === question.id);
+                return (
+                  <QuestionCard 
+                    key={question.id} 
+                    question={question} 
+                    value={currentAnswer?.value.toString()} 
+                    onValueChange={value => handleAnswerChange(question.id, value)} 
+                    questionNumber={questionNumber} 
+                  />
+                );
+              })}
             </div>
-            
-            {dimensionQuestions.map((question, index) => {
-          const questionNumber = questions.findIndex(q => q.id === question.id) + 1;
-          const currentAnswer = answers.find(a => a.questionId === question.id);
-          return <QuestionCard key={question.id} question={question} value={currentAnswer?.value.toString()} onValueChange={value => handleAnswerChange(question.id, value)} questionNumber={questionNumber} />;
+          );
         })}
-          </div>)}
 
         {/* Submit Button */}
         <div className="flex justify-center pt-8">
