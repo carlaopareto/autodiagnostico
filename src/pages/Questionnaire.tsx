@@ -144,7 +144,7 @@ export const Questionnaire = () => {
     },
     'Comunicação': {
       number: 9,
-      description: 'A comunicação abrange as estratégias, canais e práticas utilizadas pela organização para se relacionar com seus diversos públicos. Envolve a definição de mensagens claras, escolha de canais apropriados e a comunicação efetiva dos resultados e impactos alcançados.'
+      description: 'A comunicação se refere às estratégias e canais de relacionamento e divulgação dos trabalhos da organização junto a públicos internos e externos, incluindo sua conexão com a identidade organizacional.'
     },
     'Gestão administrativa, financeira e jurídica': {
       number: 10,
