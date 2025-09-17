@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ClipboardList, BarChart3, FileText } from "lucide-react";
 import conjuntaLogo from "@/assets/conjunta-logo.png";
+import iacpLogo from "@/assets/iacp-logo.png";
+import movesocialLogo from "@/assets/movesocial-logo.jpg";
 const Index = () => {
   const navigate = useNavigate();
   const features = [{
@@ -101,9 +103,15 @@ const Index = () => {
         {/* Realização Section */}
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-8">Realização</h2>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center gap-8 flex-wrap">
             <a href="https://conjunta.org/" target="_blank" rel="noopener noreferrer" className="inline-block hover:opacity-80 transition-opacity">
-              <img src={conjuntaLogo} alt="Plataforma Conjunta" className="h-16 max-h-16 " />
+              <img src={conjuntaLogo} alt="Plataforma Conjunta" className="h-16 max-h-16" />
+            </a>
+            <a href="#" className="inline-block hover:opacity-80 transition-opacity">
+              <img src={iacpLogo} alt="Instituto ACP" className="h-16 max-h-16" />
+            </a>
+            <a href="#" className="inline-block hover:opacity-80 transition-opacity">
+              <img src={movesocialLogo} alt="Move Social" className="h-16 max-h-16" />
             </a>
           </div>
         </div>
