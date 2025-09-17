@@ -148,7 +148,7 @@ export const Questionnaire = () => {
     },
     'Gestão administrativa, financeira e jurídica': {
       number: 10,
-      description: 'Esta dimensão refere-se aos processos e controles necessários para o funcionamento administrativo, financeiro e legal da organização. Inclui controles financeiros, cumprimento de obrigações legais, gestão de riscos e sistemas de informação que suportem a gestão organizacional.'
+      description: 'A gestão administrativa e financeira refere-se ao controle financeiro e aos procedimentos administrativos da organização.'
     }
   };
 
