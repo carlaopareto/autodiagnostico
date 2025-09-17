@@ -122,24 +122,32 @@ export const Questionnaire = () => {
       number: 3,
       description: 'A gestão de pessoas está relacionada às políticas de recursos humanos que regem as relações na organização. Envolve a descrição das responsabilidades e atribuições, os planos de desenvolvimento da equipe, cuidado com a qualidade das relações na equipe e a comunicação interna.'
     },
-    'Planejamento de projetos e programas': {
+    'Incidência em políticas públicas': {
       number: 4,
+      description: 'A incidência em políticas públicas diz sobre o conhecimento das políticas relacionadas ao campo de trabalho e à influência sobre formuladores de políticas públicas.'
+    },
+    'Redes e alianças': {
+      number: 5,
+      description: 'Redes e alianças diz respeito a forma de atuação integrada e colaborativa com atores no campo que tem objetivos similares.'
+    },
+    'Planejamento de projetos e programas': {
+      number: 6,
       description: 'O planejamento de projetos e programas envolve a capacidade de desenhar, estruturar e organizar as iniciativas da organização de forma alinhada à sua missão e estratégia. Inclui a definição de objetivos, metodologias, cronogramas e a participação dos beneficiários no processo de planejamento.'
     },
     'Monitoramento, avaliação e aprendizagem': {
-      number: 5,
+      number: 7,
       description: 'Esta dimensão refere-se aos sistemas e práticas para acompanhar, medir e avaliar o desempenho e impacto das ações da organização. Envolve a coleta sistemática de dados, análise de resultados e a promoção de uma cultura de aprendizagem contínua que permita melhorias e ajustes.'
     },
     'Captação de recursos': {
-      number: 6,
+      number: 8,
       description: 'A captação de recursos engloba as estratégias e práticas para obter e manter o financiamento necessário para as atividades da organização. Inclui a diversificação de fontes, sustentabilidade financeira e o desenvolvimento de relacionamentos sólidos com financiadores e parceiros.'
     },
     'Comunicação': {
-      number: 7,
+      number: 9,
       description: 'A comunicação abrange as estratégias, canais e práticas utilizadas pela organização para se relacionar com seus diversos públicos. Envolve a definição de mensagens claras, escolha de canais apropriados e a comunicação efetiva dos resultados e impactos alcançados.'
     },
     'Gestão administrativa, financeira e jurídica': {
-      number: 8,
+      number: 10,
       description: 'Esta dimensão refere-se aos processos e controles necessários para o funcionamento administrativo, financeiro e legal da organização. Inclui controles financeiros, cumprimento de obrigações legais, gestão de riscos e sistemas de informação que suportem a gestão organizacional.'
     }
   };
