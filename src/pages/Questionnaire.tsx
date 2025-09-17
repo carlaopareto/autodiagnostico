@@ -136,7 +136,7 @@ export const Questionnaire = () => {
     },
     'Monitoramento, avaliação e aprendizagem': {
       number: 7,
-      description: 'Esta dimensão refere-se aos sistemas e práticas para acompanhar, medir e avaliar o desempenho e impacto das ações da organização. Envolve a coleta sistemática de dados, análise de resultados e a promoção de uma cultura de aprendizagem contínua que permita melhorias e ajustes.'
+      description: 'Monitoramento e avaliação refere-se à forma e à periodicidade da coleta de dados, sistematização dos resultados e utilização dos mesmos para aprendizagem da equipe e qualificação dos programas e projetos.'
     },
     'Captação de recursos': {
       number: 8,
