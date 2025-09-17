@@ -45,7 +45,6 @@ export const Questionnaire = () => {
   };
   const progress = answers.length / questions.length * 100;
   const completedQuestions = answers.length;
-
   const downloadPDF = () => {
     const doc = new jsPDF();
     let yPosition = 20;
@@ -59,10 +58,8 @@ export const Questionnaire = () => {
     doc.setFont("helvetica", "bold");
     doc.text("Autodiagnóstico de Desenvolvimento Institucional", marginLeft, yPosition);
     yPosition += 20;
-
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-
     questions.forEach((question, index) => {
       // Check if we need a new page
       if (yPosition > pageHeight - 80) {
@@ -90,12 +87,11 @@ export const Questionnaire = () => {
       yPosition += 10;
 
       // Options with scores
-      question.options.forEach((option) => {
+      question.options.forEach(option => {
         if (yPosition > pageHeight - 20) {
           doc.addPage();
           yPosition = 20;
         }
-        
         const optionText = `(${option.value}) ${option.text}`;
         const lines = doc.splitTextToSize(optionText, pageWidth);
         lines.forEach((line: string) => {
@@ -103,15 +99,12 @@ export const Questionnaire = () => {
           yPosition += 6;
         });
       });
-
       yPosition += 8;
     });
-
     doc.save("questionario-desenvolvimento-institucional.pdf");
-    
     toast({
       title: "PDF gerado com sucesso",
-      description: "O questionário foi baixado em formato PDF.",
+      description: "O questionário foi baixado em formato PDF."
     });
   };
 
@@ -128,12 +121,7 @@ export const Questionnaire = () => {
       <div className="bg-background/95 backdrop-blur-sm shadow-sm border-b">
         <div className="container mx-auto px-4 py-4 max-w-4xl">
           <div className="flex items-center justify-between">
-            <Button
-              onClick={() => navigate('/')}
-              variant="ghost"
-              size="sm"
-              className="flex items-center gap-2 text-sm"
-            >
+            <Button onClick={() => navigate('/')} variant="ghost" size="sm" className="flex items-center gap-2 text-sm">
               <ArrowLeft className="w-4 h-4" />
               Voltar
             </Button>
@@ -142,26 +130,12 @@ export const Questionnaire = () => {
               <span className="text-sm font-medium text-muted-foreground">
                 Baixar o Autodiagnóstico:
               </span>
-              <Button
-                onClick={downloadPDF}
-                variant="outline"
-                size="sm"
-                className="flex items-center gap-2 text-sm"
-              >
+              <Button onClick={downloadPDF} variant="outline" size="sm" className="flex items-center gap-2 text-sm">
                 <Download className="w-4 h-4" />
                 Baixar PDF
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="sm"
-                className="flex items-center gap-2 text-sm"
-              >
-                <a 
-                  href="https://docs.google.com/spreadsheets/u/3/d/1wHt8KwY5KBQqGCSf9pXl35TlEPGTqIL-mjURWYOl3IQ/copy?pli=1" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
+              <Button asChild variant="outline" size="sm" className="flex items-center gap-2 text-sm">
+                <a href="https://docs.google.com/spreadsheets/u/3/d/1wHt8KwY5KBQqGCSf9pXl35TlEPGTqIL-mjURWYOl3IQ/copy?pli=1" target="_blank" rel="noopener noreferrer">
                   <Download className="w-4 h-4" />
                   Baixar Excel
                 </a>
@@ -191,9 +165,16 @@ export const Questionnaire = () => {
           <h1 className="text-3xl font-bold mb-4 text-[#141614]">
             Autodiagnóstico de Desenvolvimento Institucional
           </h1>
-          <p className="text-muted-foreground text-lg">
-            Responda todas as perguntas para avaliar o desenvolvimento da sua organização
-          </p>
+          <p className="text-muted-foreground text-lg">Este instrumento foi criado para ajudar as organizações da sociedade civil a refletirem sobre seu desenvolvimento institucional. Ele está estruturado em torno 10 dimensões, que se desdobram em um conjunto de 39 categorias. Cada uma delas possui uma pergunta de múltipla escolha correspondente, sempre com quatro alternativas de resposta, que ilustram cenários possíveis. Sabemos que as alternativas propostas não irão descrever com exatidão a realidade das OSCs — e tudo bem! A ideia não é chegar a uma resposta "certa" ou a um retrato perfeito da realidade da organização. O importante é escolher aquela opção que mais se aproxima do cenário atual.
+
+
+Para garantir um bom diagnóstico, é necessário que todas as perguntas sejam respondidas. É fundamental analisar as 10 dimensões em conjunto, mesmo que algumas delas não pareçam estar entre as prioridades do momento. Isso porque as dimensões são interligadas: mudanças em uma área tendem a gerar efeitos em outras. Por exemplo, ajustes no modelo de governança podem influenciar a gestão de pessoas ou a captação de recursos. Compreender essas conexões é essencial para identificar não apenas o que precisa ser fortalecido, mas também como conduzir esse processo — sempre respeitando a história, o contexto e a singularidade de cada organização.
+
+
+Acima de tudo, esse é um convite para que o uso do instrumento na sua organização seja uma oportunidade de realizarem conversas importantes, que acabam não sendo priorizadas na correria do dia a dia. E também para honrar e celebrar o percurso da organização até aqui. 
+
+
+Boa aplicação!</p>
         </div>
 
         {/* Questions by Dimension */}
