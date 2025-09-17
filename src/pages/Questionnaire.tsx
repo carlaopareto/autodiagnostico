@@ -116,7 +116,7 @@ export const Questionnaire = () => {
     },
     'Governança': {
       number: 2,
-      description: 'A governança refere-se às estruturas, processos e práticas através dos quais uma organização é dirigida e controlada. Envolve a definição de papéis e responsabilidades, tomada de decisões transparentes, prestação de contas e a criação de mecanismos que assegurem que a organização cumpra sua missão de forma ética e eficaz.'
+      description: 'A governança diz respeito aos mecanismos de participação nos processos decisórios, assim como a organização dos papéis de cada um(a) nas instâncias de governança da instituição.'
     },
     'Gestão e desenvolvimento de pessoas': {
       number: 3,
