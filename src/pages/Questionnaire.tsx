@@ -132,7 +132,7 @@ export const Questionnaire = () => {
     },
     'Planejamento de projetos e programas': {
       number: 6,
-      description: 'O planejamento de projetos e programas envolve a capacidade de desenhar, estruturar e organizar as iniciativas da organização de forma alinhada à sua missão e estratégia. Inclui a definição de objetivos, metodologias, cronogramas e a participação dos beneficiários no processo de planejamento.'
+      description: 'O planejamento diz respeito à definição periódica das estratégias dos programas, com relação permanente aos objetivos e missão da organização e com base em análise de necessidades e oportunidades.'
     },
     'Monitoramento, avaliação e aprendizagem': {
       number: 7,
