@@ -140,7 +140,7 @@ export const Questionnaire = () => {
     },
     'Captação de recursos': {
       number: 8,
-      description: 'A captação de recursos engloba as estratégias e práticas para obter e manter o financiamento necessário para as atividades da organização. Inclui a diversificação de fontes, sustentabilidade financeira e o desenvolvimento de relacionamentos sólidos com financiadores e parceiros.'
+      description: 'A captação de recursos diz respeito às estratégias de financiamento da organização, a diversificação das fontes de recursos e a sustentabilidade financeira das mesmas.'
     },
     'Comunicação': {
       number: 9,
