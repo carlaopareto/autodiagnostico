@@ -114,7 +114,7 @@ export const Results = () => {
           backgroundColor: '#ffffff'
         });
         const chartImgData = chartCanvas.toDataURL('image/png');
-        const chartWidth = 120;
+        const chartWidth = 180;
         const chartHeight = chartCanvas.height * chartWidth / chartCanvas.width;
         pdf.addImage(chartImgData, 'PNG', (pageWidth - chartWidth) / 2, yPosition, chartWidth, chartHeight);
         yPosition += chartHeight + 20;
