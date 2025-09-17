@@ -27,9 +27,8 @@ const Index = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#141614]">
             Autodiagnóstico de<br />Desenvolvimento Institucional
           </h1>
-          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            Esse é um instrumento criado pela Move Social com o apoio da Plataforma Conjunta para avaliar a maturidade e o desenvolvimento institucional de organizações da sociedade civil. Com base em um questionário de 39 perguntas acerca de diferentes dimensões organizacionais, você consegue avaliar o grau de desenvolvimento institucional de sua OSC e áreas prioritárias para desenvolvimento.
-          </p>
+          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">Esse é um instrumento criado pela Move Social, a pedido do Instituto ACP e em parceria com a Plataforma Conjunta, para avaliar o desenvolvimento institucional de organizações da sociedade civil. Com base em um questionário de 39 perguntas acerca de diferentes dimensões organizacionais, você consegue avaliar o estágio de desenvolvimento institucional de sua OSC e áreas prioritárias para fortalecimento.
+Esse é um instrumento criado pela Move Social com o apoio da Plataforma Conjunta para avaliar a maturidade e o desenvolvimento institucional de organizações da sociedade civil. Com base em um questionário de 39 perguntas acerca de diferentes dimensões organizacionais, você consegue avaliar o grau de desenvolvimento institucional de sua OSC e áreas prioritárias para desenvolvimento.</p>
           <Button size="lg" onClick={() => navigate("/questionnaire")} className="px-8 py-4 text-lg font-semibold bg-[#323b9e] text-white hover:opacity-90 rounded-2xl shadow">
             Iniciar Avaliação
           </Button>
