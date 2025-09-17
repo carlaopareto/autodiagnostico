@@ -120,7 +120,7 @@ export const Questionnaire = () => {
     },
     'Gestão e desenvolvimento de pessoas': {
       number: 3,
-      description: 'A gestão e desenvolvimento de pessoas abrange as políticas, práticas e processos relacionados ao capital humano da organização. Inclui recrutamento, desenvolvimento profissional, clima organizacional, gestão de conflitos e a criação de um ambiente que favoreça o crescimento pessoal e profissional dos colaboradores.'
+      description: 'A gestão de pessoas está relacionada às políticas de recursos humanos que regem as relações na organização. Envolve a descrição das responsabilidades e atribuições, os planos de desenvolvimento da equipe, cuidado com a qualidade das relações na equipe e a comunicação interna.'
     },
     'Planejamento de projetos e programas': {
       number: 4,
