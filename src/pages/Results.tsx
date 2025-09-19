@@ -4,15 +4,42 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from 'recharts';
 import { Answer, AssessmentResults, DimensionResult } from '@/types/assessment';
 import { questions } from '@/data/questions';
-import { FileDown, ArrowLeft, BarChart3 } from 'lucide-react';
+import { FileDown, ArrowLeft, BarChart3, ChevronDown, ChevronUp } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { useToast } from '@/hooks/use-toast';
+// Collapsible component for dimension answers
+const CollapsibleAnswers = ({ dimension, answers }: { dimension: string; answers: { question: string; value: number; optionText: string }[] }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <CollapsibleTrigger className="flex items-center gap-2 font-medium hover:text-primary transition-colors">
+        <span>{dimension}</span>
+        {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+      </CollapsibleTrigger>
+      <CollapsibleContent className="mt-2">
+        <div className="space-y-2 text-sm text-muted-foreground">
+          {answers.map((answer, idx) => (
+            <div key={idx} className="pl-4 border-l-2 border-border">
+              <div className="font-medium">{answer.question}</div>
+              <div className="text-primary font-semibold">Resposta: {answer.value}/10</div>
+              <div className="text-xs">{answer.optionText}</div>
+            </div>
+          ))}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+};
+
 export const Results = () => {
   const [results, setResults] = useState<AssessmentResults | null>(null);
+  const [answersData, setAnswersData] = useState<Answer[]>([]);
   const navigate = useNavigate();
   const {
     toast
@@ -24,6 +51,7 @@ export const Results = () => {
       return;
     }
     const answers: Answer[] = JSON.parse(storedAnswers);
+    setAnswersData(answers);
     const calculatedResults = calculateResults(answers);
     setResults(calculatedResults);
   }, [navigate]);
@@ -220,9 +248,23 @@ export const Results = () => {
       </div>;
   }
 
-  // Prepare data for radar chart
+  // Get answers by dimension for FAQ
+  const getAnswersByDimension = (dimension: string) => {
+    const dimensionQuestions = questions.filter(q => q.dimension === dimension);
+    return dimensionQuestions.map(question => {
+      const answer = answersData.find(a => a.questionId === question.id);
+      const selectedOption = answer ? question.options.find(opt => opt.value === answer.value) : null;
+      return {
+        question: question.text,
+        value: answer?.value || 0,
+        optionText: selectedOption?.text || 'Não respondida'
+      };
+    });
+  };
+
+  // Prepare data for radar chart with scores
   const radarData = results.dimensions.map(dim => ({
-    dimension: dim.dimension.replace(' e ', '\ne ').replace('planejamento', 'plan.'),
+    dimension: `${dim.dimension.replace(' e ', '\ne ').replace('planejamento', 'plan.')} (${dim.average})`,
     value: dim.average,
     fullName: dim.dimension
   }));
@@ -252,6 +294,18 @@ export const Results = () => {
             <Badge variant="secondary" className="text-sm">
               Gerado em {results.completedAt.toLocaleDateString('pt-BR')}
             </Badge>
+          </div>
+
+          {/* Action Buttons - Top */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <Button variant="outline" onClick={() => navigate('/')} className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Voltar ao início
+            </Button>
+            <Button onClick={exportToPDF} className="flex items-center gap-2 bg-[var(--gradient-primary)] hover:opacity-90 transition-[var(--transition-smooth)] text-[#0f100f] bg-[#95a1eb]">
+              <FileDown className="w-4 h-4" />
+              Exportar PDF
+            </Button>
           </div>
 
           {/* Overall Score */}
@@ -339,18 +393,23 @@ export const Results = () => {
                     <TableHead>Dimensão</TableHead>
                     <TableHead className="text-center">Perguntas</TableHead>
                     <TableHead className="text-center">Média</TableHead>
-                    
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {results.dimensions.map(dimension => <TableRow key={dimension.dimension}>
-                      <TableCell className="font-medium">{dimension.dimension}</TableCell>
+                  {results.dimensions.map(dimension => (
+                    <TableRow key={dimension.dimension}>
+                      <TableCell className="font-medium">
+                        <CollapsibleAnswers 
+                          dimension={dimension.dimension} 
+                          answers={getAnswersByDimension(dimension.dimension)} 
+                        />
+                      </TableCell>
                       <TableCell className="text-center">{dimension.questions}</TableCell>
                       <TableCell className="text-center font-semibold">
                         {dimension.average}/10
                       </TableCell>
-                      
-                    </TableRow>)}
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </CardContent>
