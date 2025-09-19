@@ -5,7 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ClipboardList, BarChart3, FileText } from "lucide-react";
 import conjuntaLogo from "@/assets/conjunta-logo.png";
 import iacpLogo from "@/assets/iacp-logo.png";
-import movesocialLogo from "@/assets/movesocial-logo.jpg";
+import movesocialLogo from "@/assets/movesocial-logo-new.png";
 const Index = () => {
   const navigate = useNavigate();
   const features = [{
