@@ -267,30 +267,39 @@ export const Results = () => {
         pdf.setFontSize(12);
         pdf.setFont("helvetica", "bold");
         pdf.text(dimension.dimension, 20, yPosition);
-        yPosition += 8;
+        yPosition += 10;
 
         pdf.setFontSize(10);
         pdf.setFont("helvetica", "normal");
         
         const dimensionAnswers = getAnswersByDimension(dimension.dimension);
         dimensionAnswers.forEach(answer => {
-          if (yPosition > pageHeight - 30) {
+          if (yPosition > pageHeight - 35) {
             pdf.addPage();
             yPosition = 20;
           }
           
-          // Quebrar linha longa em múltiplas linhas se necessário
-          const questionText = `${answer.question}: ${answer.value}/10 - ${answer.optionText}`;
-          const maxWidth = pageWidth - 50;
-          const lines = pdf.splitTextToSize(questionText, maxWidth);
-          
-          lines.forEach((line: string) => {
-            pdf.text(`• ${line}`, 25, yPosition);
+          // Pergunta
+          const questionLines = pdf.splitTextToSize(`Pergunta: ${answer.question}`, pageWidth - 50);
+          questionLines.forEach((line: string) => {
+            pdf.text(line, 25, yPosition);
             yPosition += 5;
           });
-          yPosition += 2;
+          
+          // Pontuação
+          pdf.text(`Pontuação: ${answer.value}/10`, 25, yPosition);
+          yPosition += 5;
+          
+          // Resposta
+          const responseLines = pdf.splitTextToSize(`Resposta: ${answer.optionText}`, pageWidth - 50);
+          responseLines.forEach((line: string) => {
+            pdf.text(line, 25, yPosition);
+            yPosition += 5;
+          });
+          
+          yPosition += 8; // Espaçamento entre perguntas
         });
-        yPosition += 8;
+        yPosition += 5; // Espaçamento entre dimensões
       });
 
       // Adicionar rodapés a todas as páginas
