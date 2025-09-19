@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -14,26 +14,6 @@ export const Questionnaire = () => {
   const {
     toast
   } = useToast();
-
-  // Load saved answers from localStorage on component mount
-  useEffect(() => {
-    const savedAnswers = localStorage.getItem('questionnaireAnswers');
-    if (savedAnswers) {
-      try {
-        const parsedAnswers = JSON.parse(savedAnswers);
-        setAnswers(parsedAnswers);
-      } catch (error) {
-        console.error('Error loading saved answers:', error);
-      }
-    }
-  }, []);
-
-  // Save answers to localStorage whenever answers change
-  useEffect(() => {
-    if (answers.length > 0) {
-      localStorage.setItem('questionnaireAnswers', JSON.stringify(answers));
-    }
-  }, [answers]);
   const handleAnswerChange = (questionId: string, value: string) => {
     setAnswers(prev => {
       const existing = prev.findIndex(a => a.questionId === questionId);
@@ -219,7 +199,7 @@ export const Questionnaire = () => {
               {completedQuestions}/{questions.length}
             </span>
           </div>
-          <Progress value={progress} className="h-2" />
+          
         </div>
       </div>
 
@@ -231,18 +211,17 @@ export const Questionnaire = () => {
           </h1>
           <p className="text-muted-foreground text-lg mb-4">Este instrumento foi criado para ajudar as organizações da sociedade civil a refletirem sobre seu desenvolvimento institucional. Ele está estruturado em torno 10 dimensões, que se desdobram em um conjunto de 39 categorias. Cada uma delas possui uma pergunta de múltipla escolha correspondente, sempre com quatro alternativas de resposta, que ilustram cenários possíveis. Sabemos que as alternativas propostas não irão descrever com exatidão a realidade das OSCs — e tudo bem! A ideia não é chegar a uma resposta "certa" ou a um retrato perfeito da realidade da organização. O importante é escolher aquela opção que mais se aproxima do cenário atual.</p>
 
-<p className="text-muted-foreground text-lg mb-4">Para garantir um bom diagnóstico, é necessário que todas as perguntas sejam respondidas. É fundamental analisar as 10 dimensões em conjunto, mesmo que algumas delas não pareçam estar entre as prioridades do momento. Isso porque as dimensões são interligadas: mudanças em uma área tendem a gerar efeitos em outras. Por exemplo, ajustes no modelo de governança podem influenciar a gestão de pessoas ou a captação de recursos. Compreender essas conexões é essencial para identificar não apenas o que precisa ser fortalecido, mas também como conduzir esse processo — sempre respeitando a história, o contexto e a singularidade de cada organização.</p>
+        <p className="text-muted-foreground text-lg mb-4">Para garantir um bom diagnóstico, é necessário que todas as perguntas sejam respondidas. É fundamental analisar as 10 dimensões em conjunto, mesmo que algumas delas não pareçam estar entre as prioridades do momento. Isso porque as dimensões são interligadas: mudanças em uma área tendem a gerar efeitos em outras. Por exemplo, ajustes no modelo de governança podem influenciar a gestão de pessoas ou a captação de recursos. Compreender essas conexões é essencial para identificar não apenas o que precisa ser fortalecido, mas também como conduzir esse processo — sempre respeitando a história, o contexto e a singularidade de cada organização.</p>
 
-<p className="text-muted-foreground text-lg mb-4">Acima de tudo, esse é um convite para que o uso do instrumento na sua organização seja uma oportunidade de realizarem conversas importantes, que acabam não sendo priorizadas na correria do dia a dia. E também para honrar e celebrar o percurso da organização até aqui.</p>
+        <p className="text-muted-foreground text-lg mb-4">Acima de tudo, esse é um convite para que o uso do instrumento na sua organização seja uma oportunidade de realizarem conversas importantes, que acabam não sendo priorizadas na correria do dia a dia. E também para honrar e celebrar o percurso da organização até aqui.</p>
 
-<p className="text-muted-foreground text-lg">Boa aplicação!</p>
+        <p className="text-muted-foreground text-lg">Boa aplicação!</p>
         </div>
 
         {/* Questions by Dimension */}
         {Object.entries(questionsByDimension).map(([dimension, dimensionQuestions]) => {
-          const info = dimensionInfo[dimension];
-          return (
-            <div key={dimension} className="mb-8">
+        const info = dimensionInfo[dimension];
+        return <div key={dimension} className="mb-8">
               <div className="bg-card rounded-lg p-6 mb-6 shadow-[var(--shadow-card)] border-l-4 border-l-primary">
                 <h2 className="text-xl font-semibold mb-3">
                   Dimensão {info?.number} - {dimension}
@@ -253,21 +232,12 @@ export const Questionnaire = () => {
               </div>
               
               {dimensionQuestions.map((question, index) => {
-                const questionNumber = questions.findIndex(q => q.id === question.id) + 1;
-                const currentAnswer = answers.find(a => a.questionId === question.id);
-                return (
-                  <QuestionCard 
-                    key={question.id} 
-                    question={question} 
-                    value={currentAnswer?.value.toString()} 
-                    onValueChange={value => handleAnswerChange(question.id, value)} 
-                    questionNumber={questionNumber} 
-                  />
-                );
-              })}
-            </div>
-          );
-        })}
+            const questionNumber = questions.findIndex(q => q.id === question.id) + 1;
+            const currentAnswer = answers.find(a => a.questionId === question.id);
+            return <QuestionCard key={question.id} question={question} value={currentAnswer?.value.toString()} onValueChange={value => handleAnswerChange(question.id, value)} questionNumber={questionNumber} />;
+          })}
+            </div>;
+      })}
 
         {/* Submit Button */}
         <div className="flex justify-center pt-8">
