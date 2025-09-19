@@ -92,7 +92,7 @@ export const Questionnaire = () => {
           doc.addPage();
           yPosition = 20;
         }
-        const optionText = `(${option.value}) ${option.text}`;
+        const optionText = option.text;
         const lines = doc.splitTextToSize(optionText, pageWidth);
         lines.forEach((line: string) => {
           doc.text(line, marginLeft + 10, yPosition);
