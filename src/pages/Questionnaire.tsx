@@ -86,13 +86,13 @@ export const Questionnaire = () => {
       doc.text(`Dimensão: ${question.dimension}`, marginLeft + 5, yPosition);
       yPosition += 10;
 
-      // Options with checkbox squares
+      // Options with bullet points
       question.options.forEach(option => {
         if (yPosition > pageHeight - 20) {
           doc.addPage();
           yPosition = 20;
         }
-        const optionText = `☐ ${option.text}`;
+        const optionText = `• ${option.text}`;
         const lines = doc.splitTextToSize(optionText, pageWidth - 10);
         lines.forEach((line: string) => {
           doc.text(line, marginLeft + 10, yPosition);
@@ -179,10 +179,7 @@ export const Questionnaire = () => {
                 Baixar PDF
               </Button>
               <Button asChild variant="outline" size="sm" className="flex items-center gap-2 text-sm">
-                <a href="https://docs.google.com/spreadsheets/u/3/d/1wHt8KwY5KBQqGCSf9pXl35TlEPGTqIL-mjURWYOl3IQ/copy?pli=1" target="_blank" rel="noopener noreferrer">
-                  <Download className="w-4 h-4" />
-                  Baixar Excel
-                </a>
+                
               </Button>
             </div>
           </div>
