@@ -91,7 +91,32 @@ export const Results = () => {
       });
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
       let yPosition = 20;
+
+      // Função para adicionar rodapé
+      const addFooter = async (pageNumber: number) => {
+        pdf.setFontSize(9);
+        pdf.setTextColor(120, 120, 120);
+        const footerY = pageHeight - 10;
+        
+        // Adicionar logo (usando o logo da conjunta)
+        try {
+          const logoResponse = await fetch('/src/assets/conjunta-logo.png');
+          const logoBlob = await logoResponse.blob();
+          const logoDataUrl = await new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.readAsDataURL(logoBlob);
+          });
+          pdf.addImage(logoDataUrl, 'PNG', 10, footerY - 8, 15, 8);
+        } catch (error) {
+          console.log('Logo não carregado no PDF');
+        }
+        
+        pdf.text("Autodiagnóstico de Desenvolvimento Institucional", pageWidth / 2, footerY, { align: 'center' });
+        pdf.setTextColor(0, 0, 0); // Reset cor do texto
+      };
 
       // Calcular top e bottom dimensions (mesma lógica da tela)
       const sortedDimensions = [...results.dimensions].sort((a, b) => b.average - a.average);
@@ -149,7 +174,7 @@ export const Results = () => {
       }
 
       // Verificar se precisa de nova página
-      if (yPosition > pageWidth - 60) {
+      if (yPosition > pageHeight - 60) {
         pdf.addPage();
         yPosition = 20;
       }
@@ -187,7 +212,7 @@ export const Results = () => {
       yPosition += 12;
 
       // Verificar se precisa de nova página para tabela
-      if (yPosition > pageWidth - 80) {
+      if (yPosition > pageHeight - 80) {
         pdf.addPage();
         yPosition = 20;
       }
@@ -203,8 +228,7 @@ export const Results = () => {
       pdf.setFont("helvetica", "bold");
       pdf.text("Dimensão", 20, yPosition);
       pdf.text("Perguntas", 120, yPosition);
-      pdf.text("Pontuação", 145, yPosition);
-      pdf.text("Desempenho", 170, yPosition);
+      pdf.text("Pontuação", 160, yPosition);
       yPosition += 8;
 
       // Linha do cabeçalho
@@ -214,17 +238,68 @@ export const Results = () => {
       // Dados da tabela
       pdf.setFont("helvetica", "normal");
       results.dimensions.forEach(dimension => {
-        if (yPosition > pageWidth - 30) {
+        if (yPosition > pageHeight - 40) {
           pdf.addPage();
           yPosition = 30;
         }
-        const performanceText = dimension.average >= 8 ? 'Excelente' : dimension.average >= 6 ? 'Bom' : dimension.average >= 4 ? 'Regular' : 'Requer atenção';
-        pdf.text(dimension.dimension.substring(0, 35) + (dimension.dimension.length > 35 ? '...' : ''), 20, yPosition);
+        pdf.text(dimension.dimension.substring(0, 40) + (dimension.dimension.length > 40 ? '...' : ''), 20, yPosition);
         pdf.text(dimension.questions.toString(), 125, yPosition);
-        pdf.text(`${dimension.average}/10`, 150, yPosition);
-        pdf.text(performanceText, 175, yPosition);
+        pdf.text(`${dimension.average}/10`, 165, yPosition);
         yPosition += 8;
       });
+
+      // Nova seção: Suas respostas
+      pdf.addPage();
+      yPosition = 20;
+      pdf.setFontSize(16);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Suas Respostas", 20, yPosition);
+      yPosition += 15;
+
+      // Listar todas as perguntas e respostas por dimensão
+      results.dimensions.forEach(dimension => {
+        // Verificar se precisa de nova página
+        if (yPosition > pageHeight - 50) {
+          pdf.addPage();
+          yPosition = 20;
+        }
+
+        pdf.setFontSize(12);
+        pdf.setFont("helvetica", "bold");
+        pdf.text(dimension.dimension, 20, yPosition);
+        yPosition += 8;
+
+        pdf.setFontSize(10);
+        pdf.setFont("helvetica", "normal");
+        
+        const dimensionAnswers = getAnswersByDimension(dimension.dimension);
+        dimensionAnswers.forEach(answer => {
+          if (yPosition > pageHeight - 30) {
+            pdf.addPage();
+            yPosition = 20;
+          }
+          
+          // Quebrar linha longa em múltiplas linhas se necessário
+          const questionText = `${answer.question}: ${answer.value}/10 - ${answer.optionText}`;
+          const maxWidth = pageWidth - 50;
+          const lines = pdf.splitTextToSize(questionText, maxWidth);
+          
+          lines.forEach((line: string) => {
+            pdf.text(`• ${line}`, 25, yPosition);
+            yPosition += 5;
+          });
+          yPosition += 2;
+        });
+        yPosition += 8;
+      });
+
+      // Adicionar rodapés a todas as páginas
+      const totalPages = pdf.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        await addFooter(i);
+      }
+
       const fileName = `autodiagnostico-${new Date().toISOString().split('T')[0]}.pdf`;
       pdf.save(fileName);
       toast({
