@@ -86,14 +86,14 @@ export const Questionnaire = () => {
       doc.text(`Dimensão: ${question.dimension}`, marginLeft + 5, yPosition);
       yPosition += 10;
 
-      // Options with scores
+      // Options with bullet points
       question.options.forEach(option => {
         if (yPosition > pageHeight - 20) {
           doc.addPage();
           yPosition = 20;
         }
-        const optionText = option.text;
-        const lines = doc.splitTextToSize(optionText, pageWidth);
+        const optionText = `• ${option.text}`;
+        const lines = doc.splitTextToSize(optionText, pageWidth - 10);
         lines.forEach((line: string) => {
           doc.text(line, marginLeft + 10, yPosition);
           yPosition += 6;
