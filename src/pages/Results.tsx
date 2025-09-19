@@ -260,7 +260,7 @@ export const Results = () => {
               <CardTitle className="text-lg">Pontuação Geral</CardTitle>
             </CardHeader>
             <CardContent className="text-center">
-              <div className="text-4xl font-bold mb-2 bg-[var(--gradient-primary)] bg-clip-text text-transparent bg-[#080808]">
+              <div className="text-4xl font-bold mb-2 bg-[var(--gradient-primary)] bg-clip-text-[#080808]">
                 {results.overallAverage}/10
               </div>
               
