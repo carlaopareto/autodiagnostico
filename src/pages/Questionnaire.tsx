@@ -86,16 +86,25 @@ export const Questionnaire = () => {
       doc.text(`Dimensão: ${question.dimension}`, marginLeft + 5, yPosition);
       yPosition += 10;
 
-      // Options with bullet points
+      // Options with checkbox squares
       question.options.forEach(option => {
         if (yPosition > pageHeight - 20) {
           doc.addPage();
           yPosition = 20;
         }
-        const optionText = `• ${option.text}`;
-        const lines = doc.splitTextToSize(optionText, pageWidth - 10);
+        
+        // Draw checkbox square
+        const checkboxSize = 4;
+        const checkboxX = marginLeft + 10;
+        const checkboxY = yPosition - 3;
+        doc.rect(checkboxX, checkboxY, checkboxSize, checkboxSize);
+        
+        // Add option text next to checkbox
+        const optionText = option.text;
+        const textX = checkboxX + checkboxSize + 3;
+        const lines = doc.splitTextToSize(optionText, pageWidth - 20);
         lines.forEach((line: string) => {
-          doc.text(line, marginLeft + 10, yPosition);
+          doc.text(line, textX, yPosition);
           yPosition += 6;
         });
       });
