@@ -260,12 +260,10 @@ export const Results = () => {
               <CardTitle className="text-lg">Pontuação Geral</CardTitle>
             </CardHeader>
             <CardContent className="text-center">
-              <div className="text-4xl font-bold mb-2 bg-[var(--gradient-primary)] bg-clip-text text-transparent bg-[#1b1c1b]">
+              <div className="text-4xl font-bold mb-2 bg-[var(--gradient-primary)] bg-clip-text text-transparent bg-[#080808]">
                 {results.overallAverage}/10
               </div>
-              <Badge className={getScoreColor(results.overallAverage)}>
-                {getPerformanceText(results.overallAverage)}
-              </Badge>
+              
             </CardContent>
           </Card>
 
@@ -306,7 +304,7 @@ export const Results = () => {
                 {/* Seção pontos fortes */}
           <Card className="shadow-[var(--shadow-card)] border-border/50">
                   <CardHeader>
-                    <CardTitle>Dimensões que sua organização está muito bem</CardTitle>
+                    <CardTitle>Dimensões mais desenvolvidas hoje</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="list-disc pl-6 text-muted-foreground">
@@ -318,7 +316,7 @@ export const Results = () => {
                 {/* Seção pontos de atenção */}
                 <Card className="shadow-[var(--shadow-card)] border-border/50">
                   <CardHeader>
-                    <CardTitle>Dimensões nas quais sua organização deve se desenvolver</CardTitle>
+                    <CardTitle>Dimensões que requerem atenção hoje</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="list-disc pl-6 text-muted-foreground">
@@ -340,8 +338,8 @@ export const Results = () => {
                   <TableRow>
                     <TableHead>Dimensão</TableHead>
                     <TableHead className="text-center">Perguntas</TableHead>
-                    <TableHead className="text-center">Pontuação</TableHead>
-                    <TableHead className="text-center">Desempenho</TableHead>
+                    <TableHead className="text-center">Média</TableHead>
+                    
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -351,11 +349,7 @@ export const Results = () => {
                       <TableCell className="text-center font-semibold">
                         {dimension.average}/10
                       </TableCell>
-                      <TableCell className="text-center">
-                        <Badge className={getScoreColor(dimension.average)}>
-                          {getPerformanceText(dimension.average)}
-                        </Badge>
-                      </TableCell>
+                      
                     </TableRow>)}
                 </TableBody>
               </Table>
