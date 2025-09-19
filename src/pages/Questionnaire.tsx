@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -14,6 +14,26 @@ export const Questionnaire = () => {
   const {
     toast
   } = useToast();
+
+  // Load saved answers from localStorage on component mount
+  useEffect(() => {
+    const savedAnswers = localStorage.getItem('questionnaireAnswers');
+    if (savedAnswers) {
+      try {
+        const parsedAnswers = JSON.parse(savedAnswers);
+        setAnswers(parsedAnswers);
+      } catch (error) {
+        console.error('Error loading saved answers:', error);
+      }
+    }
+  }, []);
+
+  // Save answers to localStorage whenever answers change
+  useEffect(() => {
+    if (answers.length > 0) {
+      localStorage.setItem('questionnaireAnswers', JSON.stringify(answers));
+    }
+  }, [answers]);
   const handleAnswerChange = (questionId: string, value: string) => {
     setAnswers(prev => {
       const existing = prev.findIndex(a => a.questionId === questionId);
