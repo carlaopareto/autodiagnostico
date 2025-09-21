@@ -8,6 +8,9 @@ import { Answer } from '@/types/assessment';
 import { useToast } from '@/hooks/use-toast';
 import { CheckCircle, Download, ArrowLeft } from 'lucide-react';
 import jsPDF from 'jspdf';
+import conjuntaLogo from '@/assets/conjunta-logo.png';
+import iacpLogo from '@/assets/iacp-logo-new.png';
+import movesocialLogo from '@/assets/movesocial-logo-new.png';
 export const Questionnaire = () => {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const navigate = useNavigate();
@@ -45,13 +48,76 @@ export const Questionnaire = () => {
   };
   const progress = answers.length / questions.length * 100;
   const completedQuestions = answers.length;
-  const downloadPDF = () => {
+  // Helper function to convert image to base64
+  const getBase64Image = (img: HTMLImageElement): Promise<string> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+        resolve(canvas.toDataURL('image/png'));
+      }
+    });
+  };
+
+  const downloadPDF = async () => {
     const doc = new jsPDF();
     let yPosition = 20;
     const pageHeight = doc.internal.pageSize.height;
     const marginLeft = 20;
     const marginRight = 20;
     const pageWidth = doc.internal.pageSize.width - marginLeft - marginRight;
+
+    // Load logos for footer
+    const conjuntaImg = new Image();
+    const iacpImg = new Image();
+    const movesocialImg = new Image();
+    
+    conjuntaImg.crossOrigin = 'anonymous';
+    iacpImg.crossOrigin = 'anonymous';
+    movesocialImg.crossOrigin = 'anonymous';
+    
+    conjuntaImg.src = conjuntaLogo;
+    iacpImg.src = iacpLogo;
+    movesocialImg.src = movesocialLogo;
+
+    // Wait for images to load
+    await Promise.all([
+      new Promise(resolve => conjuntaImg.onload = resolve),
+      new Promise(resolve => iacpImg.onload = resolve),
+      new Promise(resolve => movesocialImg.onload = resolve)
+    ]);
+
+    const conjuntaBase64 = await getBase64Image(conjuntaImg);
+    const iacpBase64 = await getBase64Image(iacpImg);
+    const movesocialBase64 = await getBase64Image(movesocialImg);
+
+    // Footer function
+    const addFooter = (pageNum: number) => {
+      const footerY = pageHeight - 15;
+      const logoHeight = 8;
+      const logoSpacing = 25;
+      
+      // Footer text aligned left
+      doc.setFontSize(9);
+      doc.setTextColor(120);
+      doc.text("Autodiagnóstico de Desenvolvimento Institucional", marginLeft, footerY + 3);
+      
+      // Logos aligned right
+      const totalLogosWidth = logoSpacing * 2; // Space between 3 logos
+      const startX = doc.internal.pageSize.width - marginRight - totalLogosWidth - 15; // 15 for the last logo width
+      
+      // Conjunta logo
+      doc.addImage(conjuntaBase64, 'PNG', startX, footerY - logoHeight, 15, logoHeight);
+      
+      // IACP logo  
+      doc.addImage(iacpBase64, 'PNG', startX + logoSpacing, footerY - logoHeight, 12, logoHeight);
+      
+      // Move Social logo
+      doc.addImage(movesocialBase64, 'PNG', startX + (logoSpacing * 2), footerY - logoHeight, 15, logoHeight);
+    };
 
     // Title
     doc.setFontSize(16);
@@ -60,9 +126,10 @@ export const Questionnaire = () => {
     yPosition += 20;
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
+    
     questions.forEach((question, index) => {
       // Check if we need a new page
-      if (yPosition > pageHeight - 80) {
+      if (yPosition > pageHeight - 40) { // More space for footer
         doc.addPage();
         yPosition = 20;
       }
@@ -72,7 +139,7 @@ export const Questionnaire = () => {
       const questionText = `${index + 1}. ${question.text}`;
       const questionLines = doc.splitTextToSize(questionText, pageWidth);
       questionLines.forEach((line: string) => {
-        if (yPosition > pageHeight - 20) {
+        if (yPosition > pageHeight - 40) { // More space for footer
           doc.addPage();
           yPosition = 20;
         }
@@ -88,7 +155,7 @@ export const Questionnaire = () => {
 
       // Options with checkbox squares
       question.options.forEach(option => {
-        if (yPosition > pageHeight - 20) {
+        if (yPosition > pageHeight - 40) { // More space for footer
           doc.addPage();
           yPosition = 20;
         }
@@ -110,6 +177,14 @@ export const Questionnaire = () => {
       });
       yPosition += 8;
     });
+
+    // Add footer to all pages
+    const totalPages = doc.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      addFooter(i);
+    }
+
     doc.save("questionario-desenvolvimento-institucional.pdf");
     toast({
       title: "PDF gerado com sucesso",
