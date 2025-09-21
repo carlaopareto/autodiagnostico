@@ -103,10 +103,10 @@ const Index = () => {
           <h2 className="text-2xl font-bold mb-8">Realização</h2>
           <div className="flex justify-center items-center gap-8 flex-wrap">
             <a href="https://conjunta.org/" target="_blank" rel="noopener noreferrer" className="inline-block hover:opacity-80 transition-opacity">
-              <img src={conjuntaLogo} alt="Plataforma Conjunta" className="h-16 max-h-16" />
+              <img src={conjuntaLogo} alt="Plataforma Conjunta" className="h-18 max-h-18" />
             </a>
             <a href="#" className="inline-block hover:opacity-80 transition-opacity">
-              <img src={iacpLogo} alt="Instituto ACP" className="h-16 max-h-16" />
+              <img src={iacpLogo} alt="Instituto ACP" className="h-20 max-h-20" />
             </a>
             <a href="#" className="inline-block hover:opacity-80 transition-opacity">
               <img src={movesocialLogo} alt="Move Social" className="h-12 max-h-12" />
