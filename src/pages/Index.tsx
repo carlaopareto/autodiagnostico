@@ -109,7 +109,7 @@ const Index = () => {
               <img src={iacpLogo} alt="Instituto ACP" className="h-20 max-h-20" />
             </a>
             <a href="#" className="inline-block hover:opacity-80 transition-opacity">
-              <img src={movesocialLogo} alt="Move Social" className="h-12 max-h-12" />
+              <img src={movesocialLogo} alt="Move Social" className="h-11 max-h-11" />
             </a>
           </div>
         </div>
