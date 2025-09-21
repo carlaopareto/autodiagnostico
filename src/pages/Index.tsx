@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ClipboardList, BarChart3, FileText } from "lucide-react";
 import conjuntaLogo from "@/assets/conjunta-logo.png";
-import iacpLogo from "@/assets/iacp-logo.png";
+import iacpLogo from "@/assets/iacp-logo-new.png";
 import movesocialLogo from "@/assets/movesocial-logo-new.png";
 const Index = () => {
   const navigate = useNavigate();
