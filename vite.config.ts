@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => ({
     allowedHosts: true,
     host: "::",
     port: 8080,
-    base:"/autodiagnostico/",
+    base: "/autodiagnostico",
   },
   plugins: [
     react(),
